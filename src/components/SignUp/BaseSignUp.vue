@@ -5,8 +5,7 @@ section.hero.is-fullheight.is-light
       .columns.section.is-centered
         .column.is-half
           router-link.navbar-item(:to="{ name: 'Home' }")
-            img(src='@/assets/images/casahub-simbolo-negativo.svg', style="padding-right:10px")
-            img(src='@/assets/images/casahub-logotipo-negativo.svg')
+            img(src='@/assets/images/voucard-logo-darkbg.svg')
       .columns.hero-body
         .column.section.has-text-white.has-text-centered
           h1.subtitle.is-4 A Casahub vai ajudar milhares de imobiliárias fazer uma 

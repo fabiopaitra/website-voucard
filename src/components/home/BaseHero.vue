@@ -18,14 +18,13 @@
         picture
           source.has-image-shadow(type="image/webp" srcset="@/assets/images/voucard-app-card.webp" alt="Web aplicativo Voucard") 
           img.has-image-shadow(src="@/assets/images/voucard-app-card.png" alt="Web aplicativo Voucard")
-  //- BaseBrands
+  
 
 </template>
 
 <script>
 export default {
   components: {
-    BaseBrands,
     BaseCheckBenefits,
     BaseFormSubmit,
   },
@@ -35,7 +34,6 @@ export default {
     feedback: null,
   },
 };
-import BaseBrands from '@/components/home/BaseBrands.vue';
 import BaseCheckBenefits from '@/components/home/BaseCheckBenefits.vue';
 import BaseFormSubmit from '@/components/BaseFormSubmit.vue';
 </script>

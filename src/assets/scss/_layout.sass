@@ -1,0 +1,132 @@
+img
+  object-fit: cover
+  object-position: center top
+
+// hr
+//   background-color: grey !important
+//   display: block
+//   height: 1px !important
+//   margin: 3rem 0 !important
+
+.is-secondary
+  font-family: family-secondary
+//E7495F red
+//Colors 
+$primary: #49B6E6
+$link: #2782C9
+$danger: #E3467A
+// $warning: #753AD3
+$success: #3CAE7C
+$info: #cbd6e2
+$dark: #0b2840
+$black: #1B2326
+
+.is-info
+  &.input
+    background: #f5f8fa  
+
+.gradient-1
+  background: rgb(157,58,211)
+  background: linear-gradient(90deg, rgba(157,58,211,1) 0%, rgba(227,70,122,1) 100%)
+.gradient-2
+  background: rgb(157,58,211)
+  background-image: linear-gradient(-180deg,#15212a,#1d2c37)
+
+// Update Bulma's component variables
+$family-primary: 'Open Sans', 'lato', sans-serif
+$footer-padding: 1rem
+.image
+  &.is-200x200
+    height: 200px !important
+    width: 200px !important
+.has-image-centered
+  margin-left: auto !important
+  margin-right: auto !important
+
+// Custom CSS
+
+.has-curve::after
+  content: ""
+  background-image: url('../assets/images/curva.svg')
+  z-index: 100
+  display: block
+  background-position-x: center
+  background-size: 102vw
+  padding-bottom: 2.5vw  
+
+.is-horizontal-center
+  justify-content: center
+
+.tag
+  &.is-outlined
+    background-color: transparent !important;
+    border-color: $success;
+    border-style: solid;
+    color: #fff !important;
+    border-width: thin
+
+.has-image-shadow
+  filter: drop-shadow(5px 5px 5px #000000);
+
+.header-image-home
+  background-image: url("http://orig14.deviantart.net/7584/f/2015/181/2/7/flat_mountains_landscape_by_ggiuliafilippini-d8zdbco.webp")
+  background-position: center center
+  background-repeat: no-repeat
+  background-attachment: fixed
+  background-size: cover
+  background-color: #999
+
+.hero
+  &.has-background
+    position: relative
+    overflow: hidden
+  &.has-background-overflow
+    position: relative
+  &-background
+    position: absolute
+    object-fit: cover
+    object-position: top center
+    width: 100%
+    height: 100%
+    &.is-transparent
+      opacity: .7
+    &.has-two-thirds
+      height: 85%
+.table__wrapper
+  overflow-x: auto
+
+strong
+  font-weight: 700 !important
+
+.z-5
+  z-index: 5
+.margin-n4
+  position: relative
+  top: -120px
+.margin-n2
+  margin-top: -2rem !important
+.margin-2
+  margin-top: 2rem !important
+.margin-3
+  margin-top: 3rem !important
+.margin-5
+  margin-top: 5rem !important
+
+.padding-02
+  padding: 0.2rem !important
+.padding-2
+  padding: 2rem !important
+.padding-1
+  padding: 1rem !important
+  border: 0 !important
+.padding-15
+  padding: 1.5rem !important
+.border-0
+  border: 0 !important
+
+.b-corner
+  border-bottom-right-radius: 40px
+.t-corner
+  border-top-left-radius: 40px
+.b-0
+  bottom: 0

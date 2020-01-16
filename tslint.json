@@ -1,0 +1,40 @@
+{
+  "defaultSeverity": "warning",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "trailing-comma": [
+    true,
+    {
+      "multiline": "always",
+      "singleline": "never"
+    }
+  ],
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**"
+    ]
+  },
+  "rules": {
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "arrow-parens": "always",
+    "interface-name": false,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
+    "no-consecutive-blank-lines": false,
+    "max-line-length": [
+      true,
+      240
+    ],
+    "eslint.autoFixOnSave": true,
+    "eslint.alwaysShowStatus": true
+  }
+}

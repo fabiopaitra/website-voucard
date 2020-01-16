@@ -6,10 +6,6 @@
     main
       article
         benefits
-        //- chartsHow
-        //- teamMembers
-        //- price
-        //- lastCta
     footer
       mainFooter
 

@@ -25,7 +25,6 @@
       "spaces",
       2
     ],
-    "arrow-parens": "always",
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
@@ -34,7 +33,6 @@
       true,
       240
     ],
-    "eslint.autoFixOnSave": true,
     "eslint.alwaysShowStatus": true
   }
 }

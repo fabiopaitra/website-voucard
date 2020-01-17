@@ -1,4 +1,4 @@
-# Public website for casahub startup.
+# Public website for Voucard startup.
 
 ## Project setup
 

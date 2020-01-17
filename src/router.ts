@@ -32,12 +32,12 @@ const router = new VueRouter({
       name: 'SignUp',
       component: SignUp,
       meta: {
-        title: 'Comece a usar o Casahub',
+        title: 'Comece a usar o Voucard',
         metaTags: [
           {
             name: 'description',
             content:
-              'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real na integração dos seus anúncios.',
+              'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
           },
         ],
       },

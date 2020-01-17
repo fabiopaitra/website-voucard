@@ -10693,6 +10693,11 @@ vue-loader@^15.7.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-parallaxy@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/vue-parallaxy/-/vue-parallaxy-1.1.1.tgz#2f6037f7bffa4b4ca71759924090eca581f5f459"
+  integrity sha512-qZiVpfyRes6Z0Q0DJnsos1WlV7eY478Ek+/s/6CkX67OGCIV5M16X4stQ1AccaEdKvSk+iw8jmfpM/5c6PEFDQ==
+
 vue-property-decorator@^7.0.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-7.3.0.tgz#d50d67f0b0f1c814f9f2fba36d6eeccbcc62dbb6"

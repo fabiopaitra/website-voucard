@@ -53,7 +53,7 @@ export default {
                     name: 'Beta Users Form',
                     id: Math.random(),
                     price: 10.25,
-                    brand: 'Casahub Channel Manager',
+                    brand: 'Voucard',
                     category: 'Email Subscription',
                     variant: 'Starter Beta',
                     list: 'HomePage',
@@ -62,7 +62,7 @@ export default {
                 ],
               },
             });
-            this.$router.push({ name: 'Home' }).catch(err => {
+            this.$router.push({ name: 'Home' }).catch((err) => {
               console.log(err);
               // TODO SEND EVENT TO TAG MANAGER
               // TODO OPEN THANK YOU MODAL

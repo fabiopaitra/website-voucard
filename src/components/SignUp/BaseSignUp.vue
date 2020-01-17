@@ -8,7 +8,7 @@ section.hero.is-fullheight.is-light
             img(src='@/assets/images/voucard-logo-darkbg.svg')
       .columns.hero-body
         .column.section.has-text-white.has-text-centered
-          h1.subtitle.is-4 A Casahub vai ajudar milhares de imobiliárias fazer uma 
+          h1.subtitle.is-4 A Voucard vai ajudar milhares de imobiliárias fazer uma 
             strong.has-text-white melhor gestão dos canais 
             | todos os anos.
     .column
@@ -57,9 +57,9 @@ section.hero.is-fullheight.is-light
                   .buttons.control
                   input.button.is-primary.is-fullwidth(type='submit', value='Participar do beta')
                 //- p.help.is-danger Email inválido
-                p.is-size-7 Ao criar uma conta do Casahub, você concorda em aceitar os termos de serviço do cliente da Casahub.
+                p.is-size-7 Ao criar uma conta do Voucard, você concorda em aceitar os termos de serviço do cliente da Voucard.
                 hr
-                p.is-size-7 Estamos comprometidos com sua privacidade. A Casahub usa as informações que você nos fornece para contatá-lo com relação aos nossos conteúdos, produtos e serviços relevantes. Você pode cancelar a assinatura dessas comunicações quando quiser. Para mais informações, confira nossa Política de privacidade.
+                p.is-size-7 Estamos comprometidos com sua privacidade. A Voucard usa as informações que você nos fornece para contatá-lo com relação aos nossos conteúdos, produtos e serviços relevantes. Você pode cancelar a assinatura dessas comunicações quando quiser. Para mais informações, confira nossa Política de privacidade.
 
 
 

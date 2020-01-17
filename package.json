@@ -17,6 +17,7 @@
     "http-server": "^0.11.1",
     "vue": "^2.5.21",
     "vue-class-component": "^6.0.0",
+    "vue-parallaxy": "^1.1.1",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vuefire": "^2.2.1"
@@ -30,8 +31,8 @@
     "@vue/cli-service": "^3.5.3",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
-    "prerender-spa-plugin": "^3.0.0-beta.2",
     "node-sass": "^4.9.0",
+    "prerender-spa-plugin": "^3.0.0-beta.2",
     "sass-loader": "^7.0.1",
     "terser": "^3.14.1",
     "ts-jest": "^23.0.0",

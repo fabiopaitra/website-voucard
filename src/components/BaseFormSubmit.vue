@@ -41,7 +41,6 @@ export default {
         db.collection('users-signup-beta')
           .add({
             email: this.email,
-            timestamp: Date.now(),
           })
           .then(() => {
             window.dataLayer.push({
@@ -62,7 +61,7 @@ export default {
                 ],
               },
             });
-            this.$router.push({ name: 'Home' }).catch((err) => {
+            this.$router.push({ name: 'Home' }).catch(err => {
               console.log(err);
               // TODO SEND EVENT TO TAG MANAGER
               // TODO OPEN THANK YOU MODAL

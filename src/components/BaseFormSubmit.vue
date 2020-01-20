@@ -38,37 +38,30 @@ export default {
     addEmail() {
       if (this.email) {
         this.feedback = null;
-        db.collection('users-signup-beta')
-          .add({
-            email: this.email,
-          })
-          .then(() => {
-            window.dataLayer.push({
-              event: 'new_subscriber',
-              ecommerce: {
-                currencyCode: 'BRL',
-                impressions: [
-                  {
-                    name: 'Beta Users Form',
-                    id: Math.random(),
-                    price: 10.25,
-                    brand: 'Voucard',
-                    category: 'Email Subscription',
-                    variant: 'Starter Beta',
-                    list: 'HomePage',
-                    position: 1,
-                  },
-                ],
+        window.dataLayer.push({
+          event: 'new_subscriber',
+          ecommerce: {
+            currencyCode: 'BRL',
+            checkout: {
+              actionField: { step: 1, option: 'Sign Up' },
+              products: {
+                name: 'Beta Users Form',
+                id: Math.random(),
+                price: 10.25,
+                brand: 'Voucard',
+                category: 'Email Subscription',
+                variant: 'Starter Beta',
               },
-            });
-            this.$router.push({ name: 'Home' }).catch(err => {
-              console.log(err);
-              // TODO SEND EVENT TO TAG MANAGER
-              // TODO OPEN THANK YOU MODAL
-              // TODO CHECK IF USER IS ALREADY SIGN UP
-              // TODO CHECK IF EMAIL IS ALREADY REGISTERED
-            });
-          });
+            },
+          },
+        });
+        this.$router.push({ name: 'Home' }).catch(err => {
+          console.log(err);
+          // TODO SEND EVENT TO TAG MANAGER
+          // TODO OPEN THANK YOU MODAL
+          // TODO CHECK IF USER IS ALREADY SIGN UP
+          // TODO CHECK IF EMAIL IS ALREADY REGISTERED
+        });
       } else {
         this.feedback = 'Insira seu e-mail';
       }

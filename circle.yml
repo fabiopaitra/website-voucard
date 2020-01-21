@@ -5,6 +5,7 @@ jobs:
     branches:
       ignore:
         - gh-pages
+        - staging
 
     docker:
       - image: cypress/base:8
@@ -14,7 +15,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
+            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
 
       - run:
           name: Installing dependencies
@@ -24,7 +25,7 @@ jobs:
           paths:
             - node_modules
             - ~/.cache
-          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
+          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "circle.yml" }}
 
       # - run:
       #     name: Linting Code

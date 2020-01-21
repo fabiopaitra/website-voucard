@@ -6,7 +6,7 @@
       p.modal-card-title Modal title
       button.delete(aria-label='close')
     section.modal-card-body
-      // Content ...
+      // Content
     footer.modal-card-foot
       button.button.is-success Save changes
       button.button Cancel  

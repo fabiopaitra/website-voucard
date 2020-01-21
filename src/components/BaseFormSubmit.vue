@@ -4,7 +4,7 @@
     .field.has-addons.is-hidden-mobile
       .control.is-expanded.has-icons-left
         label
-          input.input.is-primary.is-medium(type='email', v-model='email', name='email', placeholder='Meu E-mail')
+          input.input.is-primary.is-medium(type='email', v-model='email', name='email', placeholder='E-mail')
           span.icon.is-small.is-left
             i.fas.fa-envelope
         p.help.is-danger(v-if='feedback') Email inválido
@@ -15,7 +15,7 @@
     .field.is-hidden-tablet
       .control.is-expanded.has-icons-left
         label
-          input.input.is-primary.is-medium(type='email', v-model='email', placeholder='Meu E-mail')
+          input.input.is-primary.is-medium(type='email', v-model='email', placeholder='E-mail')
           span.icon.is-small.is-left
             i.fas.fa-envelope
         .buttons

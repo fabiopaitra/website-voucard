@@ -17,6 +17,6 @@ git init
 git add -A
 git commit -m "Deploy"
 
-git push -f git@github.com:fabiopaitra/website-voucard.git master:staging
+git push -f git@github.com:fabiopaitra/website-voucard.git master:gh-pages
 
 cd -

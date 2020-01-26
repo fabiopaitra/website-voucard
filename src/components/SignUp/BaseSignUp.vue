@@ -54,7 +54,7 @@ section.columns.is-marginless
               .field  
                 .buttons.control
                 input.button.is-primary.is-fullwidth.is-large(type='submit', value='Pedir meu convite')
-              p.help.is-danger(v-if='feedback') Você deve preencher todos os campos
+              p.help.is-danger(v-if='feedback') {{ feedback }}
               p.is-size-7 Ao criar uma conta do Voucard, você concorda em aceitar os termos de serviço do cliente da Voucard.
               hr
               p.is-size-7 Estamos comprometidos com sua privacidade. A Voucard usa as informações que você nos fornece para contatá-lo com relação aos nossos conteúdos, produtos e serviços relevantes. Você pode cancelar a assinatura dessas comunicações quando quiser. Para mais informações, confira nossa Política de privacidade.
@@ -85,34 +85,39 @@ export default {
     newUser() {
       if (this.email && this.firstName && this.lastName && this.taxID) {
         this.feedback = null;
-        let ref = db.collection('users').doc(this.email);
-        ref.get().then(doc => {
-          if (doc.exists) {
-            this.feedback = 'Este CPF já possui cadastro';
-          } else {
-            firebase
-              .auth()
-              .createUserWithEmailAndPassword(
-                this.email,
-                Math.random()
-                  .toString(36)
-                  .slice(-8),
-              )
-              .catch(err => {
-                this.feedback = err.message;
-              })
-              .then(() => {
-                db.collection('users')
-                  .doc(firebase.auth().currentUser.uid)
-                  .set({
-                    email: this.email,
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    taxID: this.taxID,
-                  });
-              });
-          }
-        });
+        const ref = db.collection('users').doc(this.taxID);
+        ref
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              this.feedback = 'Este CPF já possui cadastro';
+            } else {
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                  this.email,
+                  Math.random()
+                    .toString(36)
+                    .slice(-8),
+                )
+                .catch((err) => {
+                  this.feedback = err.message;
+                })
+                .then(() => {
+                  db.collection('users')
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({
+                      email: this.email,
+                      firstName: this.firstName,
+                      lastName: this.lastName,
+                      taxID: this.taxID,
+                    });
+                });
+            }
+          })
+          .catch((err) => {
+            this.feedback = err;
+          });
       } else {
         this.feedback = 'Você deve preencher todos os campos';
       }

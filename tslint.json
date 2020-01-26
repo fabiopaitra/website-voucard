@@ -17,6 +17,7 @@
   },
   "rules": {
     "no-console": false,
+    "quotes": "single",
     "quotemark": [
       true,
       "single"

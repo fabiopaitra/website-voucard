@@ -24,6 +24,7 @@ section
         p.help.is-danger(v-if='feedback') Email inválido
 </template>
 
+
 <script>
 import db from '@/firebase/init';
 import BaseConfirmRegModal from '@/components/BaseConfirmRegModal.vue';
@@ -67,7 +68,7 @@ export default {
             },
           },
         });
-        this.$router.push({ name: 'Home' }).catch(err => {
+        this.$router.push({ name: 'Home' }).catch((err) => {
           console.log(err);
           // TODO SEND EVENT TO TAG MANAGER
           // TODO OPEN THANK YOU MODAL

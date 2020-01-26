@@ -86,7 +86,7 @@ export default {
               },
             },
           });
-        this.$router.push({ name: 'Home' }).catch(err => {
+        this.$router.push({ name: 'Home' }).catch((err) => {
           console.log(err);
           // TODO SEND EVENT TO TAG MANAGER
           // TODO OPEN THANK YOU MODAL

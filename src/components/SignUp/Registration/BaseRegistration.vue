@@ -71,9 +71,7 @@ import { TheMask } from 'vue-the-mask';
 
 export default {
   name: 'BaseSignUp',
-  components: {
-    TheMask,
-  },
+  components: { TheMask },
   data() {
     return {
       email: null,
@@ -88,36 +86,38 @@ export default {
       if (this.email && this.firstName && this.lastName && this.taxID) {
         this.feedback = null;
         const ref = db.collection('users').doc(this.taxID);
-        ref.get().then((doc) => {
-          if (doc.exists) {
-            this.feedback = 'Este CPF já possui cadastro';
-          } else {
-            firebase
-              .auth()
-              .createUserWithEmailAndPassword(
-                this.email,
-                Math.random()
-                  .toString(36)
-                  .slice(-8),
-              )
-              .catch((err) => {
-                this.feedback = err.message;
-              })
-              .then(() => {
-                db.collection('users')
-                  .doc(firebase.auth().currentUser.uid)
-                  .set({
-                    email: this.email,
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    taxID: this.taxID,
-                  });
-              })
-              .then(() => {
-                this.$router.push({ name: 'ConfirmEmail' });
-              });
-          }
-        });
+        ref
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              this.feedback = 'Este CPF já possui cadastro';
+            } else {
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                  this.email,
+                  Math.random()
+                    .toString(36)
+                    .slice(-8),
+                )
+                .catch((err) => {
+                  this.feedback = err.message;
+                })
+                .then(() => {
+                  db.collection('users')
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({
+                      email: this.email,
+                      firstName: this.firstName,
+                      lastName: this.lastName,
+                      taxID: this.taxID,
+                    });
+                });
+            }
+          })
+          .catch((err) => {
+            this.feedback = err;
+          });
       } else {
         this.feedback = 'Você deve preencher todos os campos';
       }

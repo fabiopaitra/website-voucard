@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '@/views/HomePage.vue';
 import SignUp from '@/views/SignUp/SignUp.vue';
 import ConfirmEmail from '@/views/SignUp/ConfirmEmail/ConfirmEmail.vue';
+import Registration from '@/views/SignUp/Registration/Registration.vue';
 
 
 const router = new VueRouter({
@@ -58,21 +59,21 @@ const router = new VueRouter({
         ],
       },
     },
-    // {
-    //   path: '/signup/registration',
-    //   name: 'Registration',
-    //   component: Registration,
-    //   meta: {
-    //     title: 'Registre-se para utilizar Voucard',
-    //     metaTags: [
-    //       {
-    //         name: 'description',
-    //         content:
-    //           'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      path: '/signup/registration',
+      name: 'Registration',
+      component: Registration,
+      meta: {
+        title: 'Registre-se para utilizar Voucard',
+        metaTags: [
+          {
+            name: 'description',
+            content:
+              'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
+          },
+        ],
+      },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

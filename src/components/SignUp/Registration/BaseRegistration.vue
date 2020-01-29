@@ -15,42 +15,61 @@ section.columns.is-marginless
             a.button.is-link.is-outlined
               span.icon: i.fa.fa-sign-in
               span Entrar
-      .hero-body
+      .hero-body(v-if='profile')
         .column.is-8.is-offset-2
-          h2.title.is-4 Seja um dos primeiros a testar
-          h3.subtitle.is-6 Sem necessidade de comprovação de crédito. Apenas análise cadastral.
+          h2.title.is-4 {{ profile.firstName}}, vamos começar!
+          h3.subtitle.is-6 Para continuar, preencha as informações abaixo.
           .content
             form(@submit.prevent='newUser')
               .field.content
-                label.label Nome *
+                label.label Celular *
                 .control.has-icons-left
-                  input.input.is-info(type='text', placeholder='João' v-model='firstName')
+                  the-mask.input.is-info(mask='## #####-####', type='tel', masked=true, placeholder='11 99999-9999' v-model='phoneNumber')
                   span.icon.is-small.is-left
-                    i.fas.fa-user
+                    i.fas.fa-mobile-alt
               .field.content
-                label.label Sobrenome *
+                label.label Data de nascimento *
                 .control.has-icons-left
-                  input.input.is-info(type='text', placeholder='Tribiane da Silva' v-model='lastName')
-                  span.icon.is-small.is-left
-                    i.fas.fa-user
-              .field.content
-                label.label CPF *
-                .control.has-icons-left
-                  the-mask.input.is-info(mask='###.###.###-##', type='text', masked='masked', placeholder='Inserir meu CPF', v-model='taxID')
+                  the-mask.input.is-info(mask='##/##/####', type='text', pattern='[0-9\/]*', masked=true, placeholder='99/99/9999', v-model='DOB')
                   span.icon.is-small.is-left
                     i.fas.fa-id-card
               .field.content
-                label.label E-mail *
+                label.label CEP *
                 .control.has-icons-left
-                  input.input.is-info(type='email', placeholder='Inserir meu E-mail' v-model='email')
+                  the-mask.input.is-info(type='text', pattern='[0-9-]*', mask='#####-###' masked=true placeholder='Inserir meu CEP' v-model='CEP')
                   span.icon.is-small.is-left
-                    i.fas.fa-envelope
-              //- .field.content
+                    i.fas.fa-map-marker-alt
+              .field.content
+                label.label Endereço *
+                .control.has-icons-left
+                  input.input.is-info(type='text', placeholder='Inserir meu Endereço' v-model='address')
+                  span.icon.is-small.is-left
+                    i.fas.fa-map
+              .field.content
                 label.label Password *
                 .control.has-icons-left
                   input.input.is-info(type='password', placeholder='Inserir meu Password' v-model='password')
                   span.icon.is-small.is-left
                     i.fas.fa-key
+                ul.help
+                  li Apenas números
+                  li Evite combinações fáceis ou parte dos seus documentos
+                  li Não use números em sequência
+              h3.is-size-5.is-paddingless Documentos
+              p Para completar seu cadastro, precisamos apenas do seu passaporte e uma selfie.
+              .field
+                .file.is-boxed.has-name
+                  label.file-label
+                    input.file-input(type='file', name='resume')
+                    span.file-cta
+                      span.file-icon
+                        i.fas.fa-upload
+                      span.file-label
+                        | Passaporte
+                    span.file-name
+                      //- | Primary file…
+
+
               .field  
                 .buttons.control
                 input.button.is-primary.is-fullwidth.is-large(type='submit', value='Pedir meu convite')
@@ -66,53 +85,47 @@ section.columns.is-marginless
 
 <script>
 import db from '@/firebase/init';
-import firebase from 'firebase';
+// import firebase from 'firebase';
+import * as firebase from 'firebase';
 import { TheMask } from 'vue-the-mask';
+import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
 
 export default {
-  name: 'BaseSignUp',
-  components: { TheMask },
+  name: 'BaseRegistration',
+  components: { TheMask, BaseSignUp },
   data() {
     return {
-      email: null,
-      firstName: null,
-      lastName: null,
-      taxID: null,
+      address: null,
+      phoneNumber: null,
+      CEP: null,
+      DOB: null,
       feedback: null,
+      password: null,
+      profile: null,
     };
   },
   methods: {
     newUser() {
-      if (this.email && this.firstName && this.lastName && this.taxID) {
+      if (this.phoneNumber && this.DOB && this.CEP && this.address && this.password) {
         this.feedback = null;
-        const ref = db.collection('users').doc(this.taxID);
+        const ref = db.collection('users').doc(this.DOB);
         ref
           .get()
           .then((doc) => {
             if (doc.exists) {
               this.feedback = 'Este CPF já possui cadastro';
             } else {
-              firebase
-                .auth()
-                .createUserWithEmailAndPassword(
-                  this.email,
-                  Math.random()
-                    .toString(36)
-                    .slice(-8),
-                )
-                .catch((err) => {
-                  this.feedback = err.message;
-                })
-                .then(() => {
-                  db.collection('users')
-                    .doc(firebase.auth().currentUser.uid)
-                    .set({
-                      email: this.email,
-                      firstName: this.firstName,
-                      lastName: this.lastName,
-                      taxID: this.taxID,
-                    });
-                });
+              db.collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .set(
+                  {
+                    address: this.address,
+                    phoneNumber: this.phoneNumber,
+                    CEP: this.CEP,
+                    DOB: this.DOB,
+                  },
+                  { merge: true },
+                );
             }
           })
           .catch((err) => {
@@ -122,6 +135,15 @@ export default {
         this.feedback = 'Você deve preencher todos os campos';
       }
     },
+  },
+  created() {
+    const ref = db.collection('users');
+    ref
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+      .then((user) => {
+        this.profile = user.data();
+      });
   },
 };
 </script>

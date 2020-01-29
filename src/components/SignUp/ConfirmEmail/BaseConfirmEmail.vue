@@ -15,18 +15,18 @@ section.columns.is-marginless
             a.button.is-link.is-outlined
               span.icon: i.fa.fa-sign-in
               span Entrar
-      .hero-body.has-text-centered
+      .hero-body.has-text-centered(v-if='profile')
         .column.is-8.is-offset-2
-          h2.title.is-size-1 Olá,
+          h2.title.is-size-1 Olá, {{ profile.firstName }}.
           h3.subtitle.is-3.is-spaced Por favor, confirme seu e-mail.
           p.title.is-size-1.has-text-success.is-spaced: i.fas.fa-check-circle.is-spaced
-          p.subtitle.is-size-5.is-spaced Enviamos um e-mail para você no {{ email }}. 
-          p.is-size-5 Verifique sua caixa de entrada e siga as instruções de validação por email.
+          p.subtitle.is-size-5.is-spaced Enviamos um e-mail para você no {{ profile.email }}. 
+          p.is-size-5 Verifique sua caixa de entrada e siga as instruções de validação por e-mail.
 </template>
 
 <script>
 import db from '@/firebase/init';
-import firebase from 'firebase';
+import firebase, { auth } from 'firebase';
 import { TheMask } from 'vue-the-mask';
 import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
 
@@ -36,26 +36,21 @@ export default {
     TheMask,
     BaseSignUp,
   },
+  props: {},
   data() {
     return {
-      fistName: null,
-      email: null,
-      id: null,
+      profile: null,
     };
   },
   methods: {},
   created() {
-    const ref = db.collection('users').get();
-    ref.then((snapshot) => {
-      snapshot.forEach((doc) => {
-        let user = doc.data();
-        user.id = doc.id;
-        // console.log(user);
+    const ref = db.collection('users');
+    ref
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+      .then((user) => {
+        this.profile = user.data();
       });
-    });
-  },
-  mounted() {
-    console.log(firebase.auth().currentUser);
   },
 };
 </script>

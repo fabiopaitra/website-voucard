@@ -1,16 +1,16 @@
 <template lang="pug">
 div
-  BaseSignUp
+  BaseRegistration
 
   
 </template>
 
 <script>
-import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
+import BaseRegistration from '@/components/SignUp/Registration/BaseRegistration.vue';
 import { Component, Vue } from 'vue-property-decorator';
 @Component({
   components: {
-    BaseSignUp,
+    BaseRegistration,
   },
 })
 export default class SignUp extends Vue {}

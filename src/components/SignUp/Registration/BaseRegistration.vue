@@ -57,17 +57,31 @@ section.columns.is-marginless
                   li Não use números em sequência
               h3.is-size-5.is-paddingless Documentos
               p Para completar seu cadastro, precisamos apenas do seu passaporte e uma selfie.
-              .field
-                .file.is-boxed.has-name
-                  label.file-label
-                    input.file-input(type='file', name='resume')
-                    span.file-cta
-                      span.file-icon
-                        i.fas.fa-upload
-                      span.file-label
-                        | Passaporte
-                    span.file-name
-                      //- | Primary file…
+              .columns
+                .column
+                  .field
+                    .file.is-boxed.has-name
+                      label.file-label
+                        input.file-input(type='file', name='resume')
+                        span.file-cta
+                          span.file-icon
+                            i.fas.fa-upload
+                          span.file-label
+                            | Passaporte
+                        span.file-name
+                          //- | Primary file…
+                .column
+                  .field
+                    .file.is-boxed.has-name
+                      label.file-label
+                        input.file-input(type='file', name='resume')
+                        span.file-cta
+                          span.file-icon
+                            i.fas.fa-upload
+                          span.file-label
+                            | Selfie
+                        span.file-name
+                          //- | Primary file…
 
 
               .field  

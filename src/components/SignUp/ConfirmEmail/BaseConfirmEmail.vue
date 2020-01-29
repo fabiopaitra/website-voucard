@@ -50,6 +50,9 @@ export default {
       .get()
       .then((user) => {
         this.profile = user.data();
+      })
+      .catch((err) => {
+        this.feedback = err.message;
       });
   },
 };

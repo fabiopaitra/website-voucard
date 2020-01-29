@@ -15,7 +15,7 @@ section.columns.is-marginless
             a.button.is-link.is-outlined
               span.icon: i.fa.fa-sign-in
               span Entrar
-      .hero-body(v-if='profile')
+      .hero-body(v-if='this.profile')
         .column.is-8.is-offset-2
           h2.title.is-4 {{ profile.firstName}}, vamos começar!
           h3.subtitle.is-6 Para continuar, preencha as informações abaixo.
@@ -62,31 +62,29 @@ section.columns.is-marginless
                   .field
                     .file.is-boxed.has-name
                       label.file-label
-                        input.file-input(type='file', name='resume')
+                        input.file-input(type='file', v-once='passport', @change='uploadPassport')
                         span.file-cta
                           span.file-icon
                             i.fas.fa-upload
                           span.file-label
                             | Passaporte
-                        span.file-name
-                          //- | Primary file…
+                        span.file-name {{ passport.name }}
                 .column
                   .field
                     .file.is-boxed.has-name
                       label.file-label
-                        input.file-input(type='file', name='resume')
+                        input.file-input(type='file', name='selfie', @change='uploadSelfie')
                         span.file-cta
                           span.file-icon
                             i.fas.fa-upload
                           span.file-label
                             | Selfie
-                        span.file-name
-                          //- | Primary file…
+                        span.file-name {{ selfie.name }}
 
 
               .field  
                 .buttons.control
-                input.button.is-primary.is-fullwidth.is-large(type='submit', value='Pedir meu convite')
+                input.button.is-primary.is-fullwidth.is-large(type='submit', value='Solicitar meu Voucard')
               p.help.is-danger(v-if='feedback') {{ feedback }}
               p.is-size-7 Ao criar uma conta do Voucard, você concorda em aceitar os termos de serviço do cliente da Voucard.
               hr
@@ -116,12 +114,28 @@ export default {
       feedback: null,
       password: null,
       profile: null,
+      passport: {},
+      selfie: {},
+      file: null,
     };
   },
   methods: {
+    uploadPassport(event) {
+      const file = event.target.files[0];
+      console.log(file);
+      const storageRef = firebase.storage().ref(`${firebase.auth().currentUser.uid}/${file.name}`);
+      storageRef.put(file);
+      this.passport = { name: file.name, type: file.type, size: file.size };
+    },
+    uploadSelfie(event) {
+      const file = event.target.files[0];
+      console.log(file);
+      const storageRef = firebase.storage().ref(`${firebase.auth().currentUser.uid}/${file.name}`);
+      storageRef.put(file);
+      this.selfie = { name: file.name, type: file.type, size: file.size };
+    },
     newUser() {
       if (this.phoneNumber && this.DOB && this.CEP && this.address && this.password) {
-        this.feedback = null;
         const ref = db.collection('users').doc(this.DOB);
         ref
           .get()
@@ -157,6 +171,15 @@ export default {
       .get()
       .then((user) => {
         this.profile = user.data();
+        if (this.profile) {
+          console.log('profile com info');
+          this.DOB = this.profile.DOB;
+          this.CEP = this.profile.CEP;
+          this.address = this.profile.address;
+          this.phoneNumber = this.profile.phoneNumber;
+        } else {
+          console.log('profile sem info');
+        }
       });
   },
 };

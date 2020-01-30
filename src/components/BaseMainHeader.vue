@@ -15,8 +15,8 @@
           .buttons
             a.button.is-primary.is-outlined(disabled)
               strong Log in
-            router-link.button.is-primary(:to="{ name: 'SignUp' }") 
-              strong Quero meu cartão
+            a.button.is-primary(disabled) 
+              strong Quero meu convite
 
 </template>
 

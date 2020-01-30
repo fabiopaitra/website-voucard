@@ -42,6 +42,12 @@ section.hero.is-fullheight.is-light
                     span.icon.is-small.is-left
                       i.fas.fa-user
                 .field.content
+                  label.label CPF *
+                  .control.has-icons-left
+                    the-mask.input.is-info(mask='###.###.###-##', type='text', masked=false, placeholder='Inserir meu CPF', v-model='taxID')
+                    span.icon.is-small.is-left
+                      i.fas.fa-user
+                .field.content
                   label.label E-mail *
                   .control.has-icons-left
                     input.input.is-info(type='email', placeholder='Inserir meu E-mail' v-model='email')
@@ -68,9 +74,11 @@ section.hero.is-fullheight.is-light
 
 <script>
 import db from '@/firebase/init';
+import { TheMask } from 'vue-the-mask';
 
 export default {
   name: 'BaseSignUp',
+  components: { TheMask },
   data() {
     return {
       email: null,
@@ -78,6 +86,7 @@ export default {
       lastName: null,
       password: null,
       feedback: null,
+      taxID: null,
     };
   },
   methods: {

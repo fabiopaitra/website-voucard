@@ -2,8 +2,6 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/HomePage.vue';
 import SignUp from '@/views/SignUp/SignUp.vue';
-import ConfirmEmail from '@/views/SignUp/ConfirmEmail/ConfirmEmail.vue';
-import Registration from '@/views/SignUp/Registration/Registration.vue';
 
 
 const router = new VueRouter({
@@ -35,36 +33,6 @@ const router = new VueRouter({
       component: SignUp,
       meta: {
         title: 'Comece a usar o Voucard',
-        metaTags: [
-          {
-            name: 'description',
-            content:
-              'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
-          },
-        ],
-      },
-    },
-    {
-      path: '/signup/confirm-email',
-      name: 'ConfirmEmail',
-      component: ConfirmEmail,
-      meta: {
-        title: 'Confirme seu e-mail',
-        metaTags: [
-          {
-            name: 'description',
-            content:
-              'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
-          },
-        ],
-      },
-    },
-    {
-      path: '/signup/registration',
-      name: 'Registration',
-      component: Registration,
-      meta: {
-        title: 'Registre-se para utilizar Voucard',
         metaTags: [
           {
             name: 'description',

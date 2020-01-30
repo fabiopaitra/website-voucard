@@ -1,56 +1,43 @@
 <template lang="pug">
-section
-  .content
-    form#app(@submit.prevent='addEmail')
-      .field.has-addons.is-hidden-mobile
-        .control.is-expanded.has-icons-left
-          label
-            input.input.is-primary.is-medium(type='email', v-model='email', name='email', placeholder='E-mail')
-            span.icon.is-small.is-left
-              i.fas.fa-envelope
-          p.help.is-danger(v-if='feedback') Email inválido
-        .control
-          label
-            input.button.is-primary.is-medium(type='submit', value='Quero meu convite')
-    form(@submit.prevent='addEmail')
-      .field.is-hidden-tablet
-        .control.is-expanded.has-icons-left
-          label
-            input.input.is-primary.is-medium(type='email', v-model='email', placeholder='E-mail')
-            span.icon.is-small.is-left
-              i.fas.fa-envelope
-          .buttons
-          input.button.is-primary.is-fullwidth.is-medium(type='submit', value='Quero meu convite')
+.content
+  form#app(@submit.prevent='addEmail')
+    .field.has-addons.is-hidden-mobile
+      .control.is-expanded.has-icons-left
+        label
+          input.input.is-primary.is-medium(type='email', v-model='email', name='email', placeholder='Meu E-mail')
+          span.icon.is-small.is-left
+            i.fas.fa-envelope
         p.help.is-danger(v-if='feedback') Email inválido
+      .control
+        label
+          input.button.is-primary.is-medium(type='submit', value='Quero meu convite')
+  form(@submit.prevent='addEmail')
+    .field.is-hidden-tablet
+      .control.is-expanded.has-icons-left
+        label
+          input.input.is-primary.is-medium(type='email', v-model='email', placeholder='Meu E-mail')
+          span.icon.is-small.is-left
+            i.fas.fa-envelope
+        .buttons
+        input.button.is-primary.is-fullwidth.is-medium(type='submit', value='Quero meu convite')
+      p.help.is-danger(v-if='feedback') Email inválido
 </template>
-
 
 <script>
 import db from '@/firebase/init';
-import BaseConfirmRegModal from '@/components/BaseConfirmRegModal.vue';
 
 export default {
-  components: {
-    BaseConfirmRegModal,
-  },
   name: 'BaseFormSubmit',
-  props: {},
   data() {
     return {
       email: null,
       feedback: null,
-      modal: null,
     };
   },
   methods: {
-    showModal() {
-      this.modal = null;
-      this.$emit('modal', this.true);
-    },
     addEmail() {
       if (this.email) {
         this.feedback = null;
-        showModal();
         window.dataLayer.push({
           event: 'new_subscriber',
           ecommerce: {
@@ -68,7 +55,7 @@ export default {
             },
           },
         });
-        this.$router.push({ name: 'Home' }).catch((err) => {
+        this.$router.push({ name: 'Home' }).catch(err => {
           console.log(err);
           // TODO SEND EVENT TO TAG MANAGER
           // TODO OPEN THANK YOU MODAL

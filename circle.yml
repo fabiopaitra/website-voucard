@@ -4,7 +4,7 @@ jobs:
   build:
     branches:
       ignore:
-      - gh-pages
+        - gh-pages
 
     docker:
       - image: cypress/base:8
@@ -14,9 +14,9 @@ jobs:
 
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
+            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
 
-      - run: 
+      - run:
           name: Installing dependencies
           command: npm install
 
@@ -26,15 +26,15 @@ jobs:
             - ~/.cache
           key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum ".circleci/config.yml" }}
 
-      # - run: 
+      # - run:
       #     name: Linting Code
       #     command: npm run lint
 
-      # - run: 
+      # - run:
       #     name: Running unit tests
       #     command: npm run test:unit
 
-      # - run: 
+      # - run:
       #     name: Running e2e tests
       #     command: npm run test:e2e -- --headless
 
@@ -43,4 +43,4 @@ jobs:
 
       - run:
           name: Deploying
-          command: sh deploy.sh 
+          command: sh deploy.sh

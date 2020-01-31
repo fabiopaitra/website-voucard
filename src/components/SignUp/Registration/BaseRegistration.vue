@@ -121,14 +121,12 @@ export default {
   methods: {
     uploadPassport(event) {
       const file = event.target.files[0];
-      console.log(file);
       const storageRef = firebase.storage().ref(`${firebase.auth().currentUser.uid}/${file.name}`);
       storageRef.put(file);
       this.passport = { name: file.name, type: file.type, size: file.size };
     },
     uploadSelfie(event) {
       const file = event.target.files[0];
-      console.log(file);
       const storageRef = firebase.storage().ref(`${firebase.auth().currentUser.uid}/${file.name}`);
       storageRef.put(file);
       this.selfie = { name: file.name, type: file.type, size: file.size };
@@ -153,6 +151,15 @@ export default {
                   },
                   { merge: true },
                 );
+              firebase
+                .auth()
+                .currentUser.updatePassword(this.password)
+                .then(() => {
+                  // Update successful.
+                })
+                .catch((err) => {
+                  this.feedback = err.message;
+                });
             }
           })
           .catch((err) => {

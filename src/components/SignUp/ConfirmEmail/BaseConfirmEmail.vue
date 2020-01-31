@@ -22,6 +22,7 @@ section.columns.is-marginless
           p.title.is-size-1.has-text-success.is-spaced: i.fas.fa-check-circle.is-spaced
           p.subtitle.is-size-5.is-spaced Enviamos um e-mail para você no {{ profile.email }}. 
           p.is-size-5 Verifique sua caixa de entrada e siga as instruções de validação por e-mail.
+          .section: router-link.has-text-centered(:to="{ name: 'Registration' }") Test link for backend validation (continue to registration)
 </template>
 
 <script>

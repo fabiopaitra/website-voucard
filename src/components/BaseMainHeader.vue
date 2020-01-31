@@ -4,6 +4,11 @@
     .navbar-brand
       router-link.navbar-item(:to="{ name: 'Home' }")
         img(src='@/assets/images/voucard-logo-darkbg.svg')
+      .navbar-item.is-hidden-desktop
+        .columns.is-mobile
+          .column
+            router-link.button.is-primary(:to="{ name: 'SignUp' }") 
+              strong Quero meu cartão
       a.navbar-burger(role='button', aria-label='menu', aria-expanded='false', data-target='navbarBasicExample')
         span(aria-hidden='true')
         span(aria-hidden='true')

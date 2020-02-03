@@ -28,13 +28,9 @@ section.columns.is-marginless
 <script>
 import db from '@/firebase/init';
 import firebase, { auth } from 'firebase';
-import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
 
 export default {
-  name: 'BaseConfirmEmail',
-  components: {
-    BaseSignUp,
-  },
+  name: 'BaseApproval',
   props: {},
   data() {
     return {

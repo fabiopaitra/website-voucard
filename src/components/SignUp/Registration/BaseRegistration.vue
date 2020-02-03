@@ -114,22 +114,67 @@ export default {
       password: null,
       profile: null,
       passport: {},
+      passportURL: null,
       selfie: {},
+      selfieURL: null,
       file: null,
+      status: 'created',
     };
   },
   methods: {
     uploadPassport(event) {
       const file = event.target.files[0];
-      const storageRef = firebase.storage().ref(`${firebase.auth().currentUser.uid}/${file.name}`);
-      storageRef.put(file);
-      this.passport = { name: file.name, type: file.type, size: file.size };
+      const storageRef = firebase
+        .storage()
+        .ref(`${firebase.auth().currentUser.uid}/passport-${file.name}`);
+      const uploadTask = storageRef.put(file);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          // Handle unsuccessful uploads
+        },
+        () => {
+          // Handle successful uploads on complete
+          // Get Download URL: https://firebasestorage.googleapis.com/...
+          uploadTask.snapshot.ref.getDownloadURL().then((passportDownloadURL) => {
+            this.passport.passportURL = passportDownloadURL;
+          });
+        },
+      );
+      this.passport = {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        passportURL: this.passport.passportURL,
+      };
     },
     uploadSelfie(event) {
       const file = event.target.files[0];
-      const storageRef = firebase.storage().ref(`${firebase.auth().currentUser.uid}/${file.name}`);
-      storageRef.put(file);
-      this.selfie = { name: file.name, type: file.type, size: file.size };
+      const storageRef = firebase
+        .storage()
+        .ref(`${firebase.auth().currentUser.uid}/selfie-${file.name}`);
+      const uploadTask = storageRef.put(file);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          // Handle unsuccessful uploads
+        },
+        () => {
+          // Handle successful uploads on complete
+          // Get Download URL: https://firebasestorage.googleapis.com/...
+          uploadTask.snapshot.ref.getDownloadURL().then((selfieDownloadURL) => {
+            this.selfie.selfieURL = selfieDownloadURL;
+          });
+        },
+      );
+      this.selfie = {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        selfieURL: this.selfieDownloadURL,
+      };
     },
     newUser() {
       if (this.phoneNumber && this.DOB && this.CEP && this.address && this.password) {
@@ -148,6 +193,8 @@ export default {
                     phoneNumber: this.phoneNumber,
                     CEP: this.CEP,
                     DOB: this.DOB,
+                    selfieURL: this.selfie.selfieURL,
+                    passportURL: this.passport.passportURL,
                   },
                   { merge: true },
                 );

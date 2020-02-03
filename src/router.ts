@@ -4,7 +4,7 @@ import Home from '@/views/HomePage.vue';
 import SignUp from '@/views/SignUp/SignUp.vue';
 import ConfirmEmail from '@/views/SignUp/ConfirmEmail/ConfirmEmail.vue';
 import Registration from '@/views/SignUp/Registration/Registration.vue';
-import ApprovalProcess from '@/views/ApprovalProcess/ApprovalProcess.vue';
+import Approval from '@/views/Approval/Approval.vue';
 
 
 const router = new VueRouter({
@@ -76,16 +76,16 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/approval-process',
-      name: 'ApprovalProcess',
-      component: ApprovalProcess,
+      path: '/approval',
+      name: 'Approval',
+      component: Approval,
       meta: {
-        title: 'Approval Process',
+        title: 'Registre-se para utilizar Voucard',
         metaTags: [
           {
             name: 'description',
             content:
-              'Approval Process',
+              'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
           },
         ],
       },

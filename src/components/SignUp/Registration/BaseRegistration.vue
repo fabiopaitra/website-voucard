@@ -1,94 +1,70 @@
 <template lang="pug">
-section.columns.is-marginless
-    .column.hero.is-fullheight.is-link.is-bold.is-one-third
-      .hero-head
-        router-link.navbar-item(:to="{ name: 'Home' }")
-          img(src='@/assets/images/voucard-logo-darkbg.svg')      
-      .hero-body
-        .section.has-text-white.has-text-centered
-          h1.subtitle.is-4 A Voucard vai ajudar milhares de pessoas realizarem compras no exterior, com a menor taxa de IOF e pagando apenas uma vez.
-    .column.hero.is-fullheight
-      .hero-head
-        .navbar.navbar-end
-          p.navbar-item Já possui conta?
-          span.navbar-item
-            a.button.is-link.is-outlined
-              span.icon: i.fa.fa-sign-in
-              span Entrar
-      .hero-body(v-if='this.profile')
-        .column.is-8.is-offset-2
-          h2.title.is-4 {{ profile.firstName}}, vamos começar!
-          h3.subtitle.is-6 Para continuar, preencha as informações abaixo.
-          .content
-            form(@submit.prevent='newUser')
-              .field.content
-                label.label Celular *
-                .control.has-icons-left
-                  the-mask.input.is-info(mask='## #####-####', type='tel', masked=true, placeholder='11 99999-9999' v-model='phoneNumber')
-                  span.icon.is-small.is-left
-                    i.fas.fa-mobile-alt
-              .field.content
-                label.label Data de nascimento *
-                .control.has-icons-left
-                  the-mask.input.is-info(mask='##/##/####', type='text', pattern='[0-9\/]*', masked=true, placeholder='99/99/9999', v-model='DOB')
-                  span.icon.is-small.is-left
-                    i.fas.fa-id-card
-              .field.content
-                label.label CEP *
-                .control.has-icons-left
-                  the-mask.input.is-info(type='text', pattern='[0-9-]*', mask='#####-###' masked=true placeholder='Inserir meu CEP' v-model='CEP')
-                  span.icon.is-small.is-left
-                    i.fas.fa-map-marker-alt
-              .field.content
-                label.label Endereço *
-                .control.has-icons-left
-                  input.input.is-info(type='text', placeholder='Inserir meu Endereço' v-model='address')
-                  span.icon.is-small.is-left
-                    i.fas.fa-map
-              .field.content
-                label.label Password *
-                .control.has-icons-left
-                  input.input.is-info(type='password', placeholder='Inserir meu Password' v-model='password')
-                  span.icon.is-small.is-left
-                    i.fas.fa-key
-                ul.help
-                  li Apenas números
-                  li Evite combinações fáceis ou parte dos seus documentos
-                  li Não use números em sequência
-              h3.is-size-5.is-paddingless Documentos
-              p Para completar seu cadastro, precisamos apenas do seu passaporte e uma selfie.
-              .columns
-                .column
-                  .field
-                    .file.is-boxed.has-name
-                      label.file-label
-                        input.file-input(type='file', v-once='passport', @change='uploadPassport')
-                        span.file-cta
-                          span.file-icon
-                            i.fas.fa-upload
-                          span.file-label
-                            | Passaporte
-                        span.file-name {{ passport.name }}
-                .column
-                  .field
-                    .file.is-boxed.has-name
-                      label.file-label
-                        input.file-input(type='file', name='selfie', @change='uploadSelfie')
-                        span.file-cta
-                          span.file-icon
-                            i.fas.fa-upload
-                          span.file-label
-                            | Selfie
-                        span.file-name {{ selfie.name }}
+.column
+  //- TODO .hero-body(v-if='this.profile') 
+  .hero-body
+    .column.is-8.is-offset-2
+      h2.title.is-4 {{ user.displayName}}, vamos começar!
+      h3.subtitle.is-6 Para continuar, preencha as informações abaixo.
+      .content
+        form(@submit.prevent='newUser')
+          .field.content
+            label.label Celular *
+            .control.has-icons-left
+              the-mask.input.is-info(mask='## #####-####', type='tel', masked=true, placeholder='11 99999-9999' v-model='phoneNumber')
+              span.icon.is-small.is-left
+                i.fas.fa-mobile-alt
+          .field.content
+            label.label Data de nascimento *
+            .control.has-icons-left
+              the-mask.input.is-info(mask='##/##/####', type='text', pattern='[0-9\/]*', masked=true, placeholder='99/99/9999', v-model='DOB')
+              span.icon.is-small.is-left
+                i.fas.fa-id-card
+          .field.content
+            label.label CEP *
+            .control.has-icons-left
+              the-mask.input.is-info(type='text', pattern='[0-9-]*', mask='#####-###' masked=true placeholder='Inserir meu CEP' v-model='CEP')
+              span.icon.is-small.is-left
+                i.fas.fa-map-marker-alt
+          .field.content
+            label.label Endereço *
+            .control.has-icons-left
+              input.input.is-info(type='text', placeholder='Inserir meu Endereço' v-model='address')
+              span.icon.is-small.is-left
+                i.fas.fa-map
+          h3.is-size-5.is-paddingless Documentos
+          p Para completar seu cadastro, precisamos apenas do seu passaporte e uma selfie.
+          .columns.is-mobile
+            .column
+              .field
+                .file.is-boxed.has-name
+                  label.file-label
+                    input.file-input(type='file', v-once='passport', @change='uploadPassport')
+                    span.file-cta
+                      span.file-icon
+                        i.fas.fa-upload
+                      span.file-label
+                        | Passaporte
+                    span.file-name {{ passport.name }}
+            .column
+              .field
+                .file.is-boxed.has-name
+                  label.file-label
+                    input.file-input(type='file', name='selfie', @change='uploadSelfie')
+                    span.file-cta
+                      span.file-icon
+                        i.fas.fa-upload
+                      span.file-label
+                        | Selfie
+                    span.file-name {{ selfie.name }}
 
 
-              .field  
-                .buttons.control
-                input.button.is-primary.is-fullwidth.is-large(type='submit', value='Solicitar meu Voucard')
-              p.help.is-danger(v-if='feedback') {{ feedback }}
-              p.is-size-7 Ao criar uma conta do Voucard, você concorda em aceitar os termos de serviço do cliente da Voucard.
-              hr
-              p.is-size-7 Estamos comprometidos com sua privacidade. A Voucard usa as informações que você nos fornece para contatá-lo com relação aos nossos conteúdos, produtos e serviços relevantes. Você pode cancelar a assinatura dessas comunicações quando quiser. Para mais informações, confira nossa Política de privacidade.
+          .field  
+            .buttons.control
+            input.button.is-primary.is-fullwidth.is-large(type='submit', value='Solicitar meu Voucard')
+          p.help.is-danger(v-if='feedback') {{ feedback }}
+          p.is-size-7 Ao criar uma conta do Voucard, você concorda em aceitar os termos de serviço do cliente da Voucard.
+          hr
+          p.is-size-7 Estamos comprometidos com sua privacidade. A Voucard usa as informações que você nos fornece para contatá-lo com relação aos nossos conteúdos, produtos e serviços relevantes. Você pode cancelar a assinatura dessas comunicações quando quiser. Para mais informações, confira nossa Política de privacidade.
 
 
 
@@ -118,97 +94,72 @@ export default {
       selfie: {},
       selfieURL: null,
       file: null,
-      status: 'created',
+      status: 'registered',
+      user: firebase.auth().currentUser,
     };
   },
   methods: {
     uploadPassport(event) {
       const file = event.target.files[0];
-      const storageRef = firebase
-        .storage()
-        .ref(`${firebase.auth().currentUser.uid}/passport-${file.name}`);
+      const storageRef = firebase.storage().ref(`${this.user.uid}/passport-${file.name}`);
       const uploadTask = storageRef.put(file);
       uploadTask.on(
         'state_changed',
-        (snapshot) => {},
-        (error) => {
-          // Handle unsuccessful uploads
-        },
-        () => {
-          // Handle successful uploads on complete
-          // Get Download URL: https://firebasestorage.googleapis.com/...
+        (snapshot) => {
           uploadTask.snapshot.ref.getDownloadURL().then((passportDownloadURL) => {
-            this.passport.passportURL = passportDownloadURL;
+            this.passport = {
+              passportURL: passportDownloadURL,
+              name: file.name,
+              type: file.type,
+              size: file.size,
+            };
           });
         },
+        (err) => {
+          // Handle unsuccessful uploads
+          this.feedback = err.message;
+        },
       );
-      this.passport = {
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        passportURL: this.passport.passportURL,
-      };
     },
     uploadSelfie(event) {
       const file = event.target.files[0];
-      const storageRef = firebase
-        .storage()
-        .ref(`${firebase.auth().currentUser.uid}/selfie-${file.name}`);
+      const storageRef = firebase.storage().ref(`${this.user.uid}/selfie-${file.name}`);
       const uploadTask = storageRef.put(file);
       uploadTask.on(
         'state_changed',
-        (snapshot) => {},
-        (error) => {
-          // Handle unsuccessful uploads
-        },
-        () => {
-          // Handle successful uploads on complete
-          // Get Download URL: https://firebasestorage.googleapis.com/...
+        (snapshot) => {
           uploadTask.snapshot.ref.getDownloadURL().then((selfieDownloadURL) => {
-            this.selfie.selfieURL = selfieDownloadURL;
+            this.selfie = {
+              selfieURL: selfieDownloadURL,
+              name: file.name,
+              type: file.type,
+              size: file.size,
+            };
           });
         },
+        (err) => {
+          // Handle unsuccessful uploads
+          this.feedback = err.message;
+        },
       );
-      this.selfie = {
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        selfieURL: this.selfieDownloadURL,
-      };
     },
     newUser() {
-      if (this.phoneNumber && this.DOB && this.CEP && this.address && this.password) {
-        const ref = db.collection('users').doc(this.DOB);
-        ref
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              this.feedback = 'Este CPF já possui cadastro';
-            } else {
-              db.collection('users')
-                .doc(firebase.auth().currentUser.uid)
-                .set(
-                  {
-                    address: this.address,
-                    phoneNumber: this.phoneNumber,
-                    CEP: this.CEP,
-                    DOB: this.DOB,
-                    selfieURL: this.selfie.selfieURL,
-                    passportURL: this.passport.passportURL,
-                  },
-                  { merge: true },
-                );
-              firebase
-                .auth()
-                .currentUser.updatePassword(this.password)
-                .then(() => {
-                  // Update successful.
-                })
-                .catch((err) => {
-                  this.feedback = err.message;
-                });
-            }
-          })
+      if (this.phoneNumber && this.DOB && this.CEP && this.address) {
+        db.collection('users')
+          .doc(this.user.uid)
+          .set(
+            {
+              address: this.address,
+              phoneNumber: this.phoneNumber,
+              CEP: this.CEP,
+              DOB: this.DOB,
+              selfieURL: this.selfie.selfieURL,
+              passportURL: this.passport.passportURL,
+            },
+            {
+              merge: true,
+            },
+          )
           .catch((err) => {
             this.feedback = err;
           });
@@ -220,7 +171,7 @@ export default {
   created() {
     const ref = db.collection('users');
     ref
-      .doc(firebase.auth().currentUser.uid)
+      .doc(this.user.uid)
       .get()
       .then((user) => {
         this.profile = user.data();

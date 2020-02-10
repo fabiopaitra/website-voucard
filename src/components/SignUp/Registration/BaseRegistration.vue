@@ -60,9 +60,9 @@
 
           .field  
             .buttons.control
-            input.button.is-primary.is-fullwidth.is-large(type='submit', value='Solicitar meu Voucard')
+            input.button.is-primary.is-fullwidth.is-large(type='submit', value='Solicitar meu VouCard')
           p.help.is-danger(v-if='feedback') {{ feedback }}
-          p.is-size-7 Ao criar uma conta do Voucard, você concorda em aceitar os termos de serviço do cliente da Voucard.
+          p.is-size-7 Ao criar uma conta do VouCard, você concorda em aceitar os termos de serviço do cliente da VouCard.
           hr
           p.is-size-7 Estamos comprometidos com sua privacidade. A Voucard usa as informações que você nos fornece para contatá-lo com relação aos nossos conteúdos, produtos e serviços relevantes. Você pode cancelar a assinatura dessas comunicações quando quiser. Para mais informações, confira nossa Política de privacidade.
 

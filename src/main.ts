@@ -2,11 +2,16 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import firebase from 'firebase';
+import Vuelidate from 'vuelidate';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://vou-card.firebaseio.com';
 
 let app = null;
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 

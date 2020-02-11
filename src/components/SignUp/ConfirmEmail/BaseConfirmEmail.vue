@@ -4,7 +4,7 @@
   .hero-body.has-text-centered
     .column.is-8.is-offset-2
       h2.title.is-size-1 Olá, {{ profile.firstName }}.
-      h3.subtitle.is-3.is-spaced Por favor, confirme seu e-mail.
+      h3.subtitle.is-3.is-spaced Por favor, verifique seu e-mail.
       p.title.is-size-1.has-text-success.is-spaced: i.fas.fa-check-circle.is-spaced
       p.subtitle.is-size-5.is-spaced Enviamos um e-mail para você no {{ profile.email }}. 
       p.is-size-5 Verifique sua caixa de entrada e siga as instruções de validação por e-mail.
@@ -25,8 +25,7 @@ export default {
   },
   methods: {},
   created() {
-    const ref = db.collection('users');
-    ref
+    db.collection('users')
       .doc(firebase.auth().currentUser.uid)
       .get()
       .then((user) => {

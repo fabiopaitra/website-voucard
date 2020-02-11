@@ -1,6 +1,5 @@
 <template lang="pug">
 .column
-  //- TODO .hero-body(v-if='this.profile') 
   .hero-body
     .column.is-8.is-offset-2
       h2.title.is-4 {{ user.displayName}}, vamos começar!
@@ -8,29 +7,34 @@
       .content
         form(@submit.prevent='newUser')
           .field.content
-            label.label Celular *
+            //- label.label Celular *
             .control.has-icons-left
-              the-mask.input.is-info(mask='## #####-####', type='tel', masked=true, placeholder='11 99999-9999' v-model='phoneNumber')
+              the-mask.input.is-info(mask='## #####-####', type='tel', masked=true, placeholder='Celular' v-model='phoneNumber' @blur.native='$v.phoneNumber.$touch()' :class='{"is-danger" : $v.phoneNumber.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-mobile-alt
+              p.help.is-danger(v-if='$v.phoneNumber.$error') Digite seu nome corretamente.
           .field.content
-            label.label Data de nascimento *
+            //- label.label Data de nascimento *
             .control.has-icons-left
-              the-mask.input.is-info(mask='##/##/####', type='text', pattern='[0-9\/]*', masked=true, placeholder='99/99/9999', v-model='DOB')
+              the-mask.input.is-info(mask='##/##/####', type='text', pattern='[0-9\/]*', masked=true, placeholder='Data de nascimento', v-model='DOB' @blur.native='$v.DOB.$touch()' :class='{"is-danger" : $v.DOB.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-id-card
+              p.help.is-danger(v-if='$v.DOB.$error') Digite seu nome corretamente.
+              
           .field.content
-            label.label CEP *
+            //- label.label CEP *
             .control.has-icons-left
-              the-mask.input.is-info(type='text', pattern='[0-9-]*', mask='#####-###' masked=true placeholder='Inserir meu CEP' v-model='CEP')
+              the-mask.input.is-info(type='text', pattern='[0-9-]*', mask='#####-###' masked=true placeholder='CEP' v-model='CEP' @blur.native='$v.CEP.$touch()' :class='{"is-danger" : $v.CEP.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-map-marker-alt
+              p.help.is-danger(v-if='$v.CEP.$error') Digite seu nome corretamente.
           .field.content
-            label.label Endereço *
+            //- label.label Endereço *
             .control.has-icons-left
-              input.input.is-info(type='text', placeholder='Inserir meu Endereço' v-model='address')
+              input.input.is-info(type='text', placeholder='Endereço' v-model='address' @blur='$v.address.$touch()' :class='{"is-danger" : $v.address.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-map
+              p.help.is-danger(v-if='$v.address.$error') Digite seu nome corretamente.
           h3.is-size-5.is-paddingless Documentos
           p Para completar seu cadastro, precisamos apenas do seu passaporte e uma selfie.
           .columns.is-mobile
@@ -38,29 +42,31 @@
               .field
                 .file.is-boxed.has-name
                   label.file-label
-                    input.file-input(type='file', v-once='passport', @change='uploadPassport')
+                    input.file-input(type='file', v-once='passport', @change='uploadPassport' @blur.native='$v.passport.$touch()' :class='{"is-danger" : $v.passport.$error}')
                     span.file-cta
                       span.file-icon
                         i.fas.fa-upload
                       span.file-label
                         | Passaporte
                     span.file-name {{ passport.name }}
+                  p.help.is-danger(v-if='$v.passport.$error') Digite seu nome corretamente.
             .column
               .field
                 .file.is-boxed.has-name
                   label.file-label
-                    input.file-input(type='file', name='selfie', @change='uploadSelfie')
+                    input.file-input(type='file', name='selfie', @change='uploadSelfie' @blur.native='$v.selfie.$touch()' :class='{"is-danger" : $v.selfie.$error}')
                     span.file-cta
                       span.file-icon
                         i.fas.fa-upload
                       span.file-label
                         | Selfie
                     span.file-name {{ selfie.name }}
+                  p.help.is-danger(v-if='$v.selfie.$error') Digite seu nome corretamente.
 
 
           .field  
             .buttons.control
-            input.button.is-primary.is-fullwidth.is-large(type='submit', value='Solicitar meu VouCard')
+            input.button.is-primary.is-fullwidth.is-large(type='submit', value='Solicitar meu VouCard' :disabled='$v.$invalid')
           p.help.is-danger(v-if='feedback') {{ feedback }}
           p.is-size-7 Ao criar uma conta do VouCard, você concorda em aceitar os termos de serviço do cliente da VouCard.
           hr
@@ -76,6 +82,7 @@ import db from '@/firebase/init';
 import firebase from 'firebase';
 import { TheMask } from 'vue-the-mask';
 import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
+import { required, minLength } from 'vuelidate/lib/validators';
 
 export default {
   name: 'BaseRegistration',
@@ -97,6 +104,26 @@ export default {
       status: 'registered',
       user: firebase.auth().currentUser,
     };
+  },
+  validations: {
+    phoneNumber: {
+      required,
+    },
+    DOB: {
+      required,
+    },
+    CEP: {
+      required,
+    },
+    address: {
+      required,
+    },
+    passport: {
+      required,
+    },
+    selfie: {
+      required,
+    },
   },
   methods: {
     uploadPassport(event) {

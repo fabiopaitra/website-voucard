@@ -6,9 +6,6 @@ import Vuelidate from 'vuelidate';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://vou-card.firebaseio.com';
 
 let app = null;
 Vue.use(Vuelidate);

@@ -12,30 +12,28 @@
               input.input.is-info(type='text', placeholder='Nome' v-model='firstName' @blur='$v.firstName.$touch()' :class='{"is-danger" : $v.firstName.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-user
-              p.help.is-danger(v-if='$v.firstName.$error') Digite seu nome corretamente.
+              p.help.is-danger(v-if='$v.firstName.$error') Precisamos do seu primeiro nome.
           .field.content
             //- label.label Sobrenome *
             .control.has-icons-left
               input.input.is-info(type='text', placeholder='Sobrenome Completo' v-model='lastName' @blur='$v.lastName.$touch()' :class='{"is-danger" : $v.lastName.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-user
-              p.help.is-danger(v-if='$v.lastName.$error') Digite seu sobrenome corretamente.
+              p.help.is-danger(v-if='$v.lastName.$error') Precisamos do seu sobrenome completo.
           .field.content
             //- label.label CPF *
             .control.has-icons-left
-              the-mask.input.is-info(mask='###.###.###-##', type='text', masked=true, placeholder='CPF', v-model='taxID' @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}')
+              the-mask.input.is-info(mask='###.###.###-##', type='text', masked=true, placeholder='CPF', v-model='taxID' @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}', validateCPF=('123.456.789-00'))
               span.icon.is-small.is-left
                 i.fas.fa-id-card
-              p.help.is-danger(v-if='$v.taxID.$error') Seu CPF deve possuir 11 dígitos.
+              p.help.is-danger(v-if='$v.taxID.$error') Aqui precisamos de um CPF válido.
           .field.content
             //- label.label E-mail *
-            .control.has-icons-left(:class='{"has-icons-right": $v.email.$error}')
+            .control.has-icons-left
               input.input.is-info(type='email', placeholder='E-mail' v-model='email' @blur='$v.email.$touch()' :class='{"is-danger" : $v.email.$error}' )
               span.icon.is-small.is-left
                 i.fas.fa-envelope
-              span.icon.is-small.is-right(v-if='$v.email.$error')
-                i.fas.fa-exclamation-triangle
-              p.help.is-danger(v-if='$v.email.$error') Insira um e-mail válido.
+              p.help.is-danger(v-if='$v.email.$error') Precisamos de um e-mail válido.
           .field.content
             //- label.label Password *
             .control.has-icons-left
@@ -72,7 +70,7 @@ import db from '@/firebase/init';
 import firebase from 'firebase';
 import { TheMask } from 'vue-the-mask';
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
-import axios from 'axios';
+import { validate as validateCPF } from 'gerador-validador-cpf';
 
 export default {
   name: 'BaseSignUp',
@@ -119,25 +117,24 @@ export default {
     taxID: {
       required,
       minLen: minLength(14),
-      // unique: (val) => {
-      //   if (val === '') {
-      //     console.log('entrou no true');
-      //     return true;
-      //   } else {
-      //     console.log('entrou no false');
-      // db.collection('users')
-      //   .where('taxID', '==', val)
-      //   .then((res) => {
-      //     console.log(res);
-      //     return false;
-      // return axios
-      //   .get('https://firestore.googleapis.com/v1/projects/vou-card/databases/users/taxID')
-      //   .then((res) => {
-      //     console.log(res);
-      //   return false;
-      // });
-      // }
-      // },
+      validateCPF,
+      unique: (val) => {
+        if (val === '') {
+          // console.log('entrou no true');
+          // return true;
+        } else {
+          // console.log('entrou no false');
+          db.collection('users')
+            .where('taxID', '==', val)
+            .get()
+            .then((res) => {
+              console.log(res);
+              Object.keys(res.docs).length === 0;
+              console.log(res.docs);
+            });
+          // return false;
+        }
+      },
     },
   },
   methods: {

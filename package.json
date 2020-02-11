@@ -1,5 +1,5 @@
 {
-  "name": "Voucard",
+  "name": "voucard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,9 +10,12 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@vue/cli": "^4.2.2",
+    "@vue/cli-service-global": "^4.2.2",
     "aos": "^3.0.0-beta.6",
     "basicscroll": "^3.0.2",
     "bulma": "^0.7.2",
+    "core-js": "2",
     "firebase": "^7.6.1",
     "gerador-validador-cpf": "^4.0.1",
     "http-server": "^0.11.1",

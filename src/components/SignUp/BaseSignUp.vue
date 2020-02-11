@@ -16,7 +16,7 @@
           .field.content
             //- label.label Sobrenome *
             .control.has-icons-left
-              input.input.is-info(type='text', placeholder='Sobrenome Completo' v-model='lastName' @blur='$v.lastName.$touch()' :class='{"is-danger" : $v.lastName.$error}')
+              input.input.is-info(type='text', placeholder='Sobrenome Completo' v-model='lastName', @blur='$v.lastName.$touch()' :class='{"is-danger" : $v.lastName.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-user
               p.help.is-danger(v-if='$v.lastName.$error') Precisamos do seu sobrenome completo.
@@ -30,7 +30,7 @@
           .field.content
             //- label.label CPF *
             .control.has-icons-left
-              the-mask.input.is-info(mask='###.###.###-##', type='text', pattern='[0-9-]*', masked=true, placeholder='CPF', v-model='taxID' @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}', validateCPF=('123.456.789-00'))
+              the-mask.input.is-info(mask='###.###.###-##', type='text', masked=true, placeholder='CPF', v-model='taxID', @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-id-card
               p.help.is-danger(v-if='$v.taxID.$error') Aqui precisamos de um CPF válido.

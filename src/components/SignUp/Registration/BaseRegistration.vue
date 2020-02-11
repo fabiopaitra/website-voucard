@@ -16,7 +16,7 @@
           .field.content
             //- label.label Data de nascimento *
             .control.has-icons-left
-              the-mask.input.is-info(mask='##/##/####', type='', pattern='[0-9\/]*', masked=true, placeholder='Data de nascimento', v-model='DOB' @blur.native='$v.DOB.$touch()' :class='{"is-danger" : $v.DOB.$error}')
+              the-mask.input.is-info(mask='##/##/####', type='tel', masked=true, placeholder='Data de nascimento', v-model='DOB' @blur.native='$v.DOB.$touch()' :class='{"is-danger" : $v.DOB.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-id-card
               p.help.is-danger(v-if='$v.DOB.$error') Precisamos da sua data de nascimento.
@@ -24,7 +24,7 @@
           .field.content
             //- label.label CEP *
             .control.has-icons-left
-              the-mask.input.is-info(type='text', pattern='[0-9-]*', mask='#####-###' masked=true placeholder='CEP' v-model='CEP' @blur.native='$v.CEP.$touch()' :class='{"is-danger" : $v.CEP.$error}')
+              the-mask.input.is-info(type='tel', mask='#####-###' masked=true, placeholder='CEP' v-model='CEP' @blur.native='$v.CEP.$touch()' :class='{"is-danger" : $v.CEP.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-map-marker-alt
               p.help.is-danger(v-if='$v.CEP.$error') Precisamos do seu CEP.

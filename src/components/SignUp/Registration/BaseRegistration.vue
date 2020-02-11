@@ -80,7 +80,8 @@ import db from '@/firebase/init';
 import firebase from 'firebase';
 import { TheMask } from 'vue-the-mask';
 import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
-import { required, minLength, minValue } from 'vuelidate/lib/validators';
+import { required, minLength } from 'vuelidate/lib/validators';
+import moment from 'moment';
 
 export default {
   name: 'BaseRegistration',

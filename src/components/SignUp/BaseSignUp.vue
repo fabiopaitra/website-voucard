@@ -21,19 +21,19 @@
                 i.fas.fa-user
               p.help.is-danger(v-if='$v.lastName.$error') Precisamos do seu sobrenome completo.
           .field.content
-            //- label.label CPF *
-            .control.has-icons-left
-              the-mask.input.is-info(mask='###.###.###-##', type='text', masked=true, placeholder='CPF', v-model='taxID' @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}', validateCPF=('123.456.789-00'))
-              span.icon.is-small.is-left
-                i.fas.fa-id-card
-              p.help.is-danger(v-if='$v.taxID.$error') Aqui precisamos de um CPF válido.
-          .field.content
             //- label.label E-mail *
             .control.has-icons-left
               input.input.is-info(type='email', placeholder='E-mail' v-model='email' @blur='$v.email.$touch()' :class='{"is-danger" : $v.email.$error}' )
               span.icon.is-small.is-left
                 i.fas.fa-envelope
               p.help.is-danger(v-if='$v.email.$error') Precisamos de um e-mail válido.
+          .field.content
+            //- label.label CPF *
+            .control.has-icons-left
+              the-mask.input.is-info(mask='###.###.###-##', type='text', pattern='[0-9-]*', masked=true, placeholder='CPF', v-model='taxID' @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}', validateCPF=('123.456.789-00'))
+              span.icon.is-small.is-left
+                i.fas.fa-id-card
+              p.help.is-danger(v-if='$v.taxID.$error') Aqui precisamos de um CPF válido.
           .field.content
             //- label.label Password *
             .control.has-icons-left
@@ -118,66 +118,64 @@ export default {
       required,
       minLen: minLength(14),
       validateCPF,
-      unique: (val) => {
-        if (val === '') {
-          // console.log('entrou no true');
-          // return true;
-        } else {
-          // console.log('entrou no false');
-          db.collection('users')
-            .where('taxID', '==', val)
-            .get()
-            .then((res) => {
-              console.log(res);
-              Object.keys(res.docs).length === 0;
-              console.log(res.docs);
-            });
-          // return false;
-        }
-      },
+      // TODO: UNIQUE FIELD CPF
+      // unique: (val) => {
+      //   if (val === '') {
+      //     // console.log('entrou no true');
+      //     // return true;
+      //   } else {
+      //     // console.log('entrou no false');
+      //     db.collection('users')
+      //       .where('taxID', '==', val)
+      //       .get()
+      //       .then((res) => {
+      //         console.log(res);
+      //         Object.keys(res.docs).length === 0;
+      //         console.log(res.docs);
+      //       });
+      //     // return false;
+      //   }
+      // },
     },
   },
   methods: {
     newUser() {
-      if (this.email && this.firstName && this.lastName && this.taxID) {
-        this.feedback = null;
-        const ref = db.collection('users');
-        ref.get().then((doc) => {
-          if (doc.exists) {
-            this.feedback = 'Este CPF já possui cadastro';
-          } else {
-            firebase
-              .auth()
-              .createUserWithEmailAndPassword(this.email, this.password)
-              .catch((err) => {
-                this.feedback = err.message;
+      const ref = db.collection('users');
+      ref.get().then((doc) => {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .catch((err) => {
+            this.feedback = err.message;
+          })
+          .then(() => {
+            db.collection('users')
+              .doc(firebase.auth().currentUser.uid)
+              .set({
+                email: this.email,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                taxID: this.taxID,
               })
               .then(() => {
-                db.collection('users')
-                  .doc(firebase.auth().currentUser.uid)
-                  .set({
-                    email: this.email,
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    taxID: this.taxID,
+                const user = firebase.auth().currentUser;
+                user
+                  .sendEmailVerification()
+                  .then((log) => {
+                    console.log(log);
                   })
-                  .then(() => {
-                    firebase.auth().currentUser.updateProfile({
-                      displayName: this.firstName,
-                    });
+                  .catch((err) => {
+                    console.log(err);
                   });
-              })
-              .then(() => {
-                this.$router.push({ name: 'ConfirmEmail' });
-              })
-              .catch((err) => {
-                this.feedback = err.message;
               });
-          }
-        });
-      } else {
-        this.feedback = 'Você deve preencher todos os campos';
-      }
+          })
+          .then(() => {
+            this.$router.push({ name: 'Registration' });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
     },
   },
 };

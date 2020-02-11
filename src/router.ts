@@ -4,7 +4,7 @@ import Home from '@/views/HomePage.vue';
 import SignUp from '@/views/SignUp/SignUp.vue';
 import ConfirmEmail from '@/views/SignUp/ConfirmEmail/ConfirmEmail.vue';
 import Registration from '@/views/SignUp/Registration/Registration.vue';
-import Approval from '@/views/Approval/Approval.vue';
+// import Approval from '@/views/Approval/Approval.vue';
 
 
 const router = new VueRouter({
@@ -75,21 +75,21 @@ const router = new VueRouter({
         ],
       },
     },
-    {
-      path: '/approval',
-      name: 'Approval',
-      component: Approval,
-      meta: {
-        title: 'Registre-se para utilizar Voucard',
-        metaTags: [
-          {
-            name: 'description',
-            content:
-              'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
-          },
-        ],
-      },
-    },
+    // {
+    //   path: '/approval',
+    //   name: 'Approval',
+    //   component: Approval,
+    //   meta: {
+    //     title: 'Registre-se para utilizar Voucard',
+    //     metaTags: [
+    //       {
+    //         name: 'description',
+    //         content:
+    //           'Reduza seu tempo e investimento. Segurança, alta performance e dados em tempo real.',
+    //       },
+    //     ],
+    //   },
+    // },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

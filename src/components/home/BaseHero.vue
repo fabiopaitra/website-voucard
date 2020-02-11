@@ -23,13 +23,10 @@
 </template>
 
 <script>
-import Parallax from 'vue-parallaxy';
-
 export default {
   components: {
     BaseCheckBenefits,
     BaseFormSubmit,
-    Parallax,
   },
   name: 'BaseHero',
   props: {

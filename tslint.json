@@ -33,7 +33,6 @@
     "max-line-length": [
       true,
       240
-    ],
-    "eslint.alwaysShowStatus": true
+    ]
   }
 }

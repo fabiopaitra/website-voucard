@@ -41,10 +41,6 @@ section.section
               a.card-footer-item.has-text-success(href='#') Approve
               a.card-footer-item(href='#') Contact
               a.card-footer-item.has-text-danger(href='#') Refuse
-        
-
-    
-
 </template>
 
 <script>
@@ -60,7 +56,6 @@ export default {
     };
   },
   created() {
-    // Fetch data from firebase
     db.collection('users')
       .get()
       .then((snapshot) => {

@@ -15,8 +15,8 @@ import db from '@/firebase/init';
 import firebase from 'firebase';
 @Component({
   components: {
-    BaseApproval,
     BaseApprovalHeader,
+    BaseApproval,
   },
 })
 export default class Approval extends Vue {}

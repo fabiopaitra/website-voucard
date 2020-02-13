@@ -5,7 +5,7 @@ section.section
       .tile.is-parent
         article.tile.is-child
           .card
-            a.card-image(:href='user.passportURL', target='passport')
+            a.card-image(@click='showModal(user.passportURL)')
               figure.image.is-4by3
                 img(:src='user.passportURL')
             .card-content
@@ -50,6 +50,12 @@ section.section
               a.card-footer-item.has-text-success(@click='approveItem(user)') Approve
               a.card-footer-item.has-text-warning(@click='contactItem(user)') Contact
               a.card-footer-item.has-text-danger(@click='refuseItem(user)') Refuse
+  .modal(:class='{ "is-active": isActive }')
+    .modal-background
+    .modal-content
+      p.image.is-4by3
+        img(:src='this.imageURL')
+    button.modal-close.is-large(@click='isActive = !isActive')  
 </template>
 
 <script>
@@ -62,6 +68,8 @@ export default {
   data() {
     return {
       users: [],
+      isActive: false,
+      imageURL: null,
     };
   },
   created() {
@@ -75,6 +83,11 @@ export default {
     });
   },
   methods: {
+    showModal(imageURL) {
+      console.log(imageURL, this.imageURL);
+      this.imageURL = imageURL;
+      this.isActive = !this.isActive;
+    },
     approveItem(user) {
       db.collection('users')
         .doc(user.id)

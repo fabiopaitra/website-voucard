@@ -17,33 +17,39 @@ section.section
                   p.title.is-4 {{ user.firstName }} {{ user.lastName }}
                   p.subtitle.is-6
                     a(:href='`mailto:${user.email}`') {{ user.email }}
-              .content
+              .content.is-small
                 .tags.has-addons
-                  span.tag.is-dark {{ user.taxID }} 
-                  span.tag.is-info {{ user.id }}
-                p.icon.has-text-grey
-                  i.fas.fa-phone
-                | {{ user.phoneNumber }}
-                p.icon.has-text-grey(v-model='user.status')
-                  i.fas.fa-check
-                | {{ user.status }}
-                p.icon.has-text-grey
-                  i.fas.fa-map-marker-alt
-                | {{ user.CEP }}
-                .columns
-                  .column
-                    p.icon.has-text-grey
+                  span.tag.is-grey {{ user.taxID }} 
+                  span.tag.is-success(v-if='user.status === "Approved"') {{ user.status }}
+                  span.tag.is-danger(v-else-if='user.status === "Refused"') {{ user.status }}
+                  span.tag.is-warning(v-else-if='user.status === "Contact"') {{ user.status }}
+                  span.tag.is-link(v-else-if='user.status === "Registered"') {{ user.status }}
+                  span.tag.is-info(v-else-if='user.status === "Created"') {{ user.status }}
+                ul
+                  li
+                    span.icon
+                      i.fas.fa-phone
+                    span {{ user.phoneNumber }}
+                  li
+                    span.icon
+                      i.fas.fa-cloud
+                    span {{ user.id }}  
+                  li  
+                    span.icon
+                      i.fas.fa-map-marker-alt
+                    span {{ user.CEP }}
+                  li
+                    span.icon
                       i.fas.fa-map
-                    |  {{ user.address}}
-                .columns
-                  .column
-                    p.icon.has-text-grey
+                    span {{ user.address}}
+                  li  
+                    span.icon
                       i.fas.fa-id-card
                     time(:datetime='user.DOB') {{ user.DOB }}
             footer.card-footer
               a.card-footer-item.has-text-success(@click='approveItem(user)') Approve
-              a.card-footer-item(href='#') Contact
-              a.card-footer-item.has-text-danger(href='#') Refuse
+              a.card-footer-item.has-text-warning(@click='contactItem(user)') Contact
+              a.card-footer-item.has-text-danger(@click='refuseItem(user)') Refuse
 </template>
 
 <script>
@@ -77,10 +83,35 @@ export default {
         })
         .then(() => {
           user.status = 'Approved';
-
-          // return this.user.status;
+        });
+    },
+    contactItem(user) {
+      db.collection('users')
+        .doc(user.id)
+        .update({
+          status: 'Contact',
+        })
+        .then(() => {
+          user.status = 'Contact';
+        });
+    },
+    refuseItem(user) {
+      db.collection('users')
+        .doc(user.id)
+        .update({
+          status: 'Refused',
+        })
+        .then(() => {
+          user.status = 'Refused';
         });
     },
   },
 };
 </script>
+<style lang="sass" scoped>
+ul
+  margin-left: 0 !important
+li 
+  list-style-type: none
+
+</style>

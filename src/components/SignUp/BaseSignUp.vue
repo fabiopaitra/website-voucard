@@ -9,17 +9,10 @@
           .field.content
             //- label.label Nome *
             .control.has-icons-left
-              input.input.is-info(type='text', placeholder='Nome' v-model='firstName' @blur='$v.firstName.$touch()' :class='{"is-danger" : $v.firstName.$error}')
+              input.input.is-info(type='text', placeholder='Como você gostaria de ser chamado?' v-model='preferredName' @blur='$v.preferredName.$touch()' :class='{"is-danger" : $v.preferredName.$error}')
               span.icon.is-small.is-left
                 i.fas.fa-user
-              p.help.is-danger(v-if='$v.firstName.$error') Precisamos do seu primeiro nome.
-          .field.content
-            //- label.label Sobrenome *
-            .control.has-icons-left
-              input.input.is-info(type='text', placeholder='Sobrenome Completo' v-model='lastName', @blur='$v.lastName.$touch()' :class='{"is-danger" : $v.lastName.$error}')
-              span.icon.is-small.is-left
-                i.fas.fa-user
-              p.help.is-danger(v-if='$v.lastName.$error') Precisamos do seu sobrenome completo.
+              p.help.is-danger(v-if='$v.preferredName.$error') Precisamos do seu primeiro nome.
           .field.content
             //- label.label E-mail *
             .control.has-icons-left
@@ -27,13 +20,6 @@
               span.icon.is-small.is-left
                 i.fas.fa-envelope
               p.help.is-danger(v-if='$v.email.$error') Precisamos de um e-mail válido.
-          .field.content
-            //- label.label CPF *
-            .control.has-icons-left
-              the-mask.input.is-info(mask='###.###.###-##', type='tel', masked=true, placeholder='CPF' v-model='taxID' @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}')
-              span.icon.is-small.is-left
-                i.fas.fa-id-card
-              p.help.is-danger(v-if='$v.taxID.$error') Aqui precisamos de um CPF válido.
           .field.content
             //- label.label Password *
             .control.has-icons-left
@@ -70,7 +56,6 @@ import db from '@/firebase/init';
 import firebase from 'firebase';
 import { TheMask } from 'vue-the-mask';
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
-import { validate as validateCPF } from 'gerador-validador-cpf';
 
 export default {
   name: 'BaseSignUp',
@@ -80,8 +65,7 @@ export default {
   data() {
     return {
       email: null,
-      firstName: null,
-      lastName: null,
+      preferredName: null,
       taxID: null,
       feedback: null,
       password: null,
@@ -100,10 +84,7 @@ export default {
       required,
       email,
     },
-    firstName: {
-      required,
-    },
-    lastName: {
+    preferredName: {
       required,
     },
     password: {
@@ -113,29 +94,6 @@ export default {
     confirmPassword: {
       required,
       sameAs: sameAs('password'),
-    },
-    taxID: {
-      required,
-      minLen: minLength(14),
-      validateCPF,
-      // TODO: UNIQUE FIELD CPF
-      // unique: (val) => {
-      //   if (val === '') {
-      //     // console.log('entrou no true');
-      //     // return true;
-      //   } else {
-      //     // console.log('entrou no false');
-      //     db.collection('users')
-      //       .where('taxID', '==', val)
-      //       .get()
-      //       .then((res) => {
-      //         console.log(res);
-      //         Object.keys(res.docs).length === 0;
-      //         console.log(res.docs);
-      //       });
-      //     // return false;
-      //   }
-      // },
     },
   },
   methods: {
@@ -153,9 +111,9 @@ export default {
               .doc(firebase.auth().currentUser.uid)
               .set({
                 email: this.email,
-                firstName: this.firstName,
-                lastName: this.lastName,
+                preferredName: this.preferredName,
                 taxID: this.taxID,
+                status: this.status,
               })
               .then(() => {
                 const user = firebase.auth().currentUser;

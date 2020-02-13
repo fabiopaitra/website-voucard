@@ -5,7 +5,14 @@
       h2.title.is-4 Olá, vamos continuar.
       h3.subtitle.is-6 Para concluir seu cadastro, preencha as informações abaixo.
       .content
-        form(@submit.prevent='newUser')
+        form(@submit.prevent='registerUser')
+          .field.content
+            //- label.label Celular *
+            .control.has-icons-left
+              input.input.is-info(type='text', placeholder='Nome completo igual ao passaporte' v-model='legalName' @blur='$v.legalName.$touch()' :class='{"is-danger" : $v.legalName.$error}')
+              span.icon.is-small.is-left
+                i.fas.fa-user
+              p.help.is-danger(v-if='$v.phoneNumber.$error') Precisamos do seu nome completo igual ao passaporte
           .field.content
             //- label.label Celular *
             .control.has-icons-left
@@ -20,7 +27,6 @@
               span.icon.is-small.is-left
                 i.fas.fa-id-card
               p.help.is-danger(v-if='$v.DOB.$error') Precisamos da sua data de nascimento.
-              
           .field.content
             //- label.label CEP *
             .control.has-icons-left
@@ -35,6 +41,13 @@
               span.icon.is-small.is-left
                 i.fas.fa-map
               p.help.is-danger(v-if='$v.address.$error') Precisamos do seu endereço completo.
+          .field.content
+            //- label.label CPF *
+            .control.has-icons-left
+              the-mask.input.is-info(mask='###.###.###-##', type='tel', masked=true, placeholder='CPF' v-model='taxID' @blur.native='$v.taxID.$touch()' :class='{"is-danger" : $v.taxID.$error}')
+              span.icon.is-small.is-left
+                i.fas.fa-id-card
+              p.help.is-danger(v-if='$v.taxID.$error') Aqui precisamos de um CPF válido.
           h3.is-size-5.is-paddingless Documentos
           p Para completar seu cadastro, precisamos apenas do seu passaporte e uma selfie.
           .columns.is-mobile
@@ -82,27 +95,31 @@ import { TheMask } from 'vue-the-mask';
 import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
 import { required, minLength } from 'vuelidate/lib/validators';
 import moment from 'moment';
+import { validate as validateCPF } from 'gerador-validador-cpf';
 
 export default {
   name: 'BaseRegistration',
   components: { TheMask, BaseSignUp },
   data() {
     return {
-      address: null,
+      legalName: null,
       phoneNumber: null,
       CEP: null,
+      address: null,
       DOB: null,
+      taxID: null,
       feedback: null,
       passport: {},
-      passportURL: null,
       selfie: {},
-      selfieURL: null,
       file: null,
-      status: 'registered',
-      user: firebase.auth().currentUser,
+      status: 'Registered',
     };
   },
   validations: {
+    legalName: {
+      required,
+      minLen: minLength(13),
+    },
     phoneNumber: {
       required,
       minLen: minLength(13),
@@ -125,11 +142,16 @@ export default {
     selfie: {
       required,
     },
+    taxID: {
+      required,
+      validateCPF,
+    },
   },
   methods: {
     uploadPassport(event) {
+      const user = firebase.auth().currentUser;
       const file = event.target.files[0];
-      const storageRef = firebase.storage().ref(`${this.user.uid}/passport-${file.name}`);
+      const storageRef = firebase.storage().ref(`${user.uid}/passport-${file.name}`);
       const uploadTask = storageRef.put(file);
       uploadTask.on(
         'state_changed',
@@ -150,8 +172,9 @@ export default {
       );
     },
     uploadSelfie(event) {
+      const user = firebase.auth().currentUser;
       const file = event.target.files[0];
-      const storageRef = firebase.storage().ref(`${this.user.uid}/selfie-${file.name}`);
+      const storageRef = firebase.storage().ref(`${user.uid}/selfie-${file.name}`);
       const uploadTask = storageRef.put(file);
       uploadTask.on(
         'state_changed',
@@ -171,17 +194,21 @@ export default {
         },
       );
     },
-    newUser() {
+    registerUser() {
+      const user = firebase.auth().currentUser;
       db.collection('users')
-        .doc(this.user.uid)
+        .doc(user.uid)
         .set(
           {
-            address: this.address,
+            legalName: this.legalName,
             phoneNumber: this.phoneNumber,
             CEP: this.CEP,
+            address: this.address,
             DOB: this.DOB,
-            selfieURL: this.selfie.selfieURL,
+            taxID: this.taxID,
             passportURL: this.passport.passportURL,
+            selfieURL: this.selfie.selfieURL,
+            status: this.status,
           },
           {
             merge: true,

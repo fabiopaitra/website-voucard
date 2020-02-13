@@ -1,7 +1,7 @@
 <template lang="pug">
 section.section
   .tile.is-ancestor(style="flex-wrap: wrap;")
-    .tile.is-3(v-for='user in users' :key='user.id')
+    .tile.is-3(v-for='(user, index) in users' :key='index')
       .tile.is-parent
         article.tile.is-child
           .card
@@ -24,6 +24,9 @@ section.section
                 p.icon.has-text-grey
                   i.fas.fa-phone
                 | {{ user.phoneNumber }}
+                p.icon.has-text-grey(v-model='user.status')
+                  i.fas.fa-check
+                | {{ user.status }}
                 p.icon.has-text-grey
                   i.fas.fa-map-marker-alt
                 | {{ user.CEP }}
@@ -38,7 +41,7 @@ section.section
                       i.fas.fa-id-card
                     time(:datetime='user.DOB') {{ user.DOB }}
             footer.card-footer
-              a.card-footer-item.has-text-success(href='#') Approve
+              a.card-footer-item.has-text-success(@click='approveItem(user)') Approve
               a.card-footer-item(href='#') Contact
               a.card-footer-item.has-text-danger(href='#') Refuse
 </template>
@@ -56,16 +59,28 @@ export default {
     };
   },
   created() {
-    db.collection('users')
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          const user = doc.data();
-          user.id = doc.id;
-
-          this.users.push(user);
-        });
+    const ref = db.collection('users');
+    ref.get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+        const user = doc.data();
+        user.id = doc.id;
+        this.users.push(user);
       });
+    });
+  },
+  methods: {
+    approveItem(user) {
+      db.collection('users')
+        .doc(user.id)
+        .update({
+          status: 'Approved',
+        })
+        .then(() => {
+          user.status = 'Approved';
+
+          // return this.user.status;
+        });
+    },
   },
 };
 </script>

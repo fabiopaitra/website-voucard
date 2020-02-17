@@ -1,9 +1,13 @@
 <template lang="pug">
-div
-  BaseModal(v-if='showModal', @close='showModal = false')
-    h3(slot='header') custom header
+div(:class='{ "scroll-lock": scrollLock }')
+  BaseModal(v-if='showModal', @close='closeModal()', :imageURL = 'imageURL')
+    div(slot = 'header')
+      //- p.modal-card-title Nome
+    div(slot = 'body')
+      p.image.is-4by3
+        img(:src='imageURL')
   BaseApprovalHeader
-  BaseApproval(@show='showModal($event, imageURL)')
+  BaseApproval(@modalHandler='getImageURL($event, imageURL, firstName)')
 
   
 </template>
@@ -26,14 +30,27 @@ import firebase from 'firebase';
     return {
       showModal: false,
       imageURL: null,
+      firstName: null,
+      scrollLock: false,
     };
   },
   methods: {
-    showModal(imageURL) {
-      console.log(imageURL, this.imageURL);
-      imageURL = this.imageURL;
+    getImageURL(imageURL, firstName) {
+      this.imageURL = imageURL;
+      this.firstName = firstName;
+      this.showModal = true;
+      this.scrollLock = true;
+    },
+    closeModal() {
+      this.showModal = false;
+      this.scrollLock = false;
     },
   },
 })
 export default class Approval extends Vue {}
 </script>
+
+<style lang="sass">
+.scroll-lock
+  position: fixed !important
+</style>

@@ -5,12 +5,12 @@ section.section
       .tile.is-parent
         article.tile.is-child
           .card
-            a.card-image(@click="$emit('show', user.passportURL)")
+            a.card-image(@click="$emit('modalHandler', user.passportURL, user.firstName)")
               figure.image.is-4by3
                 img(:src='user.passportURL')
             .card-content
               .media
-                a.media-left(:href='user.selfieURL', target='selfie')
+                a.media-left(@click="$emit('modalHandler', user.selfieURL)")
                   figure.image.is-48x48
                     img(:src='user.selfieURL')
                 .media-content
@@ -64,7 +64,6 @@ export default {
   data() {
     return {
       users: [],
-      show: '',
     };
   },
   created() {
@@ -111,7 +110,7 @@ export default {
   },
 };
 </script>
-<style lang="sass" scoped>
+<style lang="sass">
 ul
   margin-left: 0 !important
 li 

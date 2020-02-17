@@ -1,20 +1,23 @@
 <template lang="pug">
 transition(name='modal')
   .modal.is-active
-    .modal-background
-    .modal-content
-      p.image.is-4by3
-        img(:src='this.passportURL')
-    .modal-header
-      slot(name='header')
-        | default header
-    .modal-body
-      slot(name='body')
-        | default body
-    .modal-footer
-      slot(name='footer')
-        | default footer
-    button.modal-close.is-large(@click="$emit('close')")
+    .modal-background(@click="$emit('close')")
+    .modal-card
+      header.modal-card-head
+        slot(name='header')
+        p.modal-card-title
+        button.delete(aria-label = 'Close', @click="$emit('close')")
+      section.modal-card-body
+        slot(name='body')
+          | default body
+      footer.modal-card-foot
+        slot(name='footer')
+          button.button.is-success(@click="$emit('close')") Salvar alterações
+          button.button(@click="$emit('close')") Cancelar
+          
+      
+
+    
          
   
 </template>
@@ -23,18 +26,16 @@ transition(name='modal')
 export default {
   name: 'BaseModal',
   data() {
-    return {
-      passportURL: null,
-    };
+    return {};
   },
-  methods: {
-    // showModal(passportURL) {
-    //   console.log(passportURL, this.passportURL);
-    //   this.passportURL = passportURL;
-    // },
+  props: {
+    imageURL: null,
   },
 };
 </script>
 
-<style>
+<style lang="sass">
+.modal
+  position: fixed !important
+
 </style>

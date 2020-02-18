@@ -57,7 +57,6 @@ import db from '@/firebase/init';
 import firebase, { auth } from 'firebase';
 import BaseModal from '@/components/Base/BaseModal.vue';
 import { mapGetters } from 'vuex';
-import { mapMutations } from 'vuex';
 
 export default {
   name: 'BaseApproval',

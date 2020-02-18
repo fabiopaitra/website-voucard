@@ -23,10 +23,10 @@
           .field.content
             //- label.label Data de nascimento *
             .control.has-icons-left
-              the-mask.input.is-info(mask='##/##/####', type='tel', masked=true, placeholder='Data de nascimento', v-model='DOB' @blur.native='$v.DOB.$touch()' :class='{"is-danger" : $v.DOB.$error}')
+              datepicker.input.is-info(:language='ptBR', placeholder='Data de nascimento', v-model='DOB')
+              p {{ DOB }}
               span.icon.is-small.is-left
                 i.fas.fa-id-card
-              p.help.is-danger(v-if='$v.DOB.$error') Precisamos da sua data de nascimento.
           .field.content
             //- label.label CEP *
             .control.has-icons-left
@@ -96,12 +96,15 @@ import BaseSignUp from '@/components/SignUp/BaseSignUp.vue';
 import { required, minLength } from 'vuelidate/lib/validators';
 import moment from 'moment';
 import { validate as validateCPF } from 'gerador-validador-cpf';
+import Datepicker from 'vuejs-datepicker';
+import { ptBR } from 'vuejs-datepicker/dist/locale';
 
 export default {
   name: 'BaseRegistration',
-  components: { TheMask, BaseSignUp },
+  components: { TheMask, BaseSignUp, Datepicker },
   data() {
     return {
+      ptBR,
       legalName: null,
       phoneNumber: null,
       CEP: null,
@@ -123,10 +126,6 @@ export default {
     phoneNumber: {
       required,
       minLen: minLength(13),
-    },
-    DOB: {
-      required,
-      minLen: minLength(10),
     },
     CEP: {
       required,
@@ -204,7 +203,7 @@ export default {
             phoneNumber: this.phoneNumber,
             CEP: this.CEP,
             address: this.address,
-            DOB: this.DOB,
+            DOB: new Date(this.DOB),
             taxID: this.taxID,
             passportURL: this.passport.passportURL,
             selfieURL: this.selfie.selfieURL,
@@ -218,6 +217,12 @@ export default {
           this.$router.push({ name: 'ConfirmEmail' });
         })
         .catch((err) => console.log(err));
+    },
+  },
+  computed: {
+    formatDate() {
+      const date = new Date(this.DOB);
+      return date;
     },
   },
 };

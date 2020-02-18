@@ -1,7 +1,7 @@
 <template lang="pug">
 section.section
   .tile.is-ancestor(style="flex-wrap: wrap;")
-    .tile.is-3(v-for='(user, index) in users' :key='index')
+    .tile.is-3(v-for='(user, index) in users' :key='index', v-if='user.status === changeStatus')
       .tile.is-parent
         article.tile.is-child
           .card
@@ -56,6 +56,8 @@ section.section
 import db from '@/firebase/init';
 import firebase, { auth } from 'firebase';
 import BaseModal from '@/components/Base/BaseModal.vue';
+import { mapGetters } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
   name: 'BaseApproval',
@@ -107,6 +109,9 @@ export default {
           user.status = 'Refused';
         });
     },
+  },
+  computed: {
+    ...mapGetters(['changeStatus']),
   },
 };
 </script>

@@ -23,8 +23,7 @@
           .field.content
             //- label.label Data de nascimento *
             .control.has-icons-left
-              datepicker.input.is-info(:language='ptBR', placeholder='Data de nascimento', v-model='DOB')
-              p {{ DOB }}
+              datepicker(:language='ptBR', input-class='input is-info', placeholder='Data de nascimento', v-model='DOB')
               span.icon.is-small.is-left
                 i.fas.fa-id-card
           .field.content
@@ -219,11 +218,6 @@ export default {
         .catch((err) => console.log(err));
     },
   },
-  computed: {
-    formatDate() {
-      const date = new Date(this.DOB);
-      return date;
-    },
-  },
+  computed: {},
 };
 </script>

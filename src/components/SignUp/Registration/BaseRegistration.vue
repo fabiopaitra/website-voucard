@@ -51,7 +51,7 @@
           p Para completar seu cadastro, precisamos apenas do seu passaporte e uma selfie.
           .columns.is-mobile
             .column
-              .field(style='width: 123px')
+              .field(style='width: 122px')
                 .file.is-boxed.has-name
                   label.file-label
                     input.file-input(type='file', v-once='passport', @change='uploadPassport' @blur='$v.passport.$touch()' :class='{"is-danger" : $v.passport.$error}')

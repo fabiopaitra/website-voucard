@@ -28,24 +28,20 @@ section.section
                 ul
                   li
                     span.icon
+                      i.fas.fa-cloud
+                    span {{ user.id }} 
+                  li
+                    span.icon
                       i.fas.fa-phone
                     span {{ user.phoneNumber }}
                   li
                     span.icon
-                      i.fas.fa-cloud
-                    span {{ user.id }}  
-                  li  
-                    span.icon
-                      i.fas.fa-map-marker-alt
-                    span {{ user.CEP }}
-                  li
-                    span.icon
                       i.fas.fa-map
-                    span {{ user.address}}
+                    span {{`${user.address.street}, ${user.address.number}. ${user.address.complement} CEP: ${user.address.postcode}. ${user.address.suburb} - ${user.address.city} ${user.address.state}, ${user.address.country}.`}}
                   li  
                     span.icon
                       i.fas.fa-id-card
-                    time(:datetime='user.DOB') {{ user.DOB }}
+                    time(:datetime='user.DOB') {{ user.DOB | moment }} 
             footer.card-footer
               a.card-footer-item.has-text-success(@click='approveItem(user)') Approve
               a.card-footer-item.has-text-warning(@click='contactItem(user)') Contact
@@ -57,6 +53,8 @@ import db from '@/firebase/init';
 import firebase, { auth } from 'firebase';
 import BaseModal from '@/components/Base/BaseModal.vue';
 import { mapGetters } from 'vuex';
+import axios from 'axios';
+import * as moment from 'moment';
 
 export default {
   name: 'BaseApproval',
@@ -66,6 +64,11 @@ export default {
     return {
       users: [],
     };
+  },
+  filters: {
+    moment: (date) => {
+      return moment(date.toDate()).format('YYYY-MM-DD');
+    },
   },
   created() {
     const ref = db.collection('users');
@@ -78,15 +81,15 @@ export default {
     });
   },
   methods: {
-    approveItem(user) {
-      db.collection('users')
-        .doc(user.id)
-        .update({
-          status: 'Approved',
-        })
-        .then(() => {
-          user.status = 'Approved';
-        });
+    async approveItem(user) {
+      await db.collection('users').doc(user.id).update({ status: 'Approved' });
+      user.status = 'Approved';
+      const getUSD = firebase.functions().httpsCallable('getUSD');
+      getUSD().then((result) => {
+        console.log(result.data);
+      }).catch((err) => {
+        console.log(err);
+      });
     },
     contactItem(user) {
       db.collection('users')
@@ -117,7 +120,6 @@ export default {
 <style lang="sass">
 ul
   margin-left: 0 !important
-li 
+li
   list-style-type: none
-
 </style>

@@ -14,6 +14,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+// firebase.functions().useFunctionsEmulator('http://localhost:5000')
 const fireBaseAnalytics = firebase.analytics();
 
 // export firestore database

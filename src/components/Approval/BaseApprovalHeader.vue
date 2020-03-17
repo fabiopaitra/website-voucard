@@ -5,7 +5,7 @@ section.hero.is-link.is-bold
       img(src='@/assets/images/voucard-logo-darkbg.svg')      
   .hero-body
     .section
-      h1.title.is-2 Know Your Customer Process
+      h1.title.is-2 KYC Portal
   .hero-foot
     nav.tabs.is-boxed
       .container
